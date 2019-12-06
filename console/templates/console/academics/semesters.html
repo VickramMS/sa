@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+<style>
+    .noborder {
+        border: none;
+        background-color: #f8f9fc;
+        padding-top: 5px;
+    }
+</style>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
 <h1 class="h3 mb-0 text-gray-800">Semester</h1>
@@ -27,16 +36,20 @@
         <tbody style="text-align: center; color: black;"> 
             {% for form in forms %}
             <tr>
-            <th scope="row">{{forloop.counter}}</th>
+            <th scope="row" style="padding-top: 17px">{{forloop.counter}}</th>
             {% for field in form %}
-            <td>{{field}}</td>
+            {% if forloop.counter == 1 %}
+            <td>{{field|add_class:"noborder"}}</td>
+            {% else %}
+            <td>{{field|add_class:"form-control"}}</td>
+            {% endif %}
             {% endfor %}
             </tr>
             {% endfor %}
         </tbody>
         <th></th>
     </table>
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 {% endblock content %}

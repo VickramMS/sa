@@ -12,13 +12,22 @@ from django.forms import modelformset_factory
 
 def home(request):
     if request.user.is_authenticated:
-        if request.user.is_staff:
+        if request.user.is_superuser:
+            return render(request, 'console/su-dashboard.html')
+        elif request.user.is_staff:
             return render(request, 'console/dashboard.html')
         else:
             return render(request, 'student/dashboard.html')
+
+        
     else:
         return render(request, 'console/home.html')
 
+def assign_int(request):
+    if request.user.is_staff:
+        return render(request, 'console/jobs/assign_int.html')
+    else:
+        return redirect('dashboard')
 
 def assigned_class(request):
     if request.user.is_staff:  
@@ -52,6 +61,12 @@ def internals(request):
             'internals8': Internal.objects.filter(student__username=request.user.username).filter(subject__sem=8),
         }
         return render(request, 'student/academics/internals.html',context)
+
+def assign_sem(request):
+    if request.user.is_staff:
+        return render(request, 'console/jobs/assign_sem.html')
+    else:
+        return redirect('dashboard')
 
 def assigned_sem(request):
     if request.user.is_staff:  
@@ -93,14 +108,6 @@ def profile(request):
     else:
         return render(request, 'student/profile.html',)
 
-def resources(request):
-    if request.user.is_staff:
-        return render(request, 'console/resources.html')
-    else:
-        return render(request, 'student/resources.html')
-
-def help(request):
-    return render(request, 'console/help.html')
 
 class Login(View):
     template_name="console/home.html"
