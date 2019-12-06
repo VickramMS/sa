@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<h1 class="h3 mb-0 text-gray-800">Semester</h1>
+</div>
+
+<form action="{% url 'internals' %}" method="GET" style="display: none;">
+    <input type="text" name="subject-query">
+    <button type="submit">Submit</button>
+</form>
+
+<form method="POST" action="{% url 'semesters' %}"  class="form-group">
+    {% csrf_token %}
+    {{ forms.management_form }}
+    <table class="table" style="margin-top: 2%;">
+        <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
+            <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Student Name</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Grade</th>
+            <th scope="col">Result</th>
+            </tr>
+        </thead>
+        <tbody style="text-align: center; color: black;"> 
+            {% for form in forms %}
+            <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            {% for field in form %}
+            <td>{{field}}</td>
+            {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        <th></th>
+    </table>
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock content %}

@@ -7,7 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.views.generic import View
 from django.utils import timezone 
-from .models import Internal, Semester
+from .models import Internal, Semester, SubjectAssign, SemAssign
+from django.forms import modelformset_factory
 
 def home(request):
     if request.user.is_authenticated:
@@ -18,15 +19,27 @@ def home(request):
     else:
         return render(request, 'console/home.html')
 
-def academics(request):
+
+def assigned_class(request):
     if request.user.is_staff:  
-        return render(request, 'console/academics.html',)
+        context={
+            'classes': SubjectAssign.objects.filter(staff__username=request.user.username)
+        }
+        return render(request, 'console/academics/assigned_class.html', context)
     else:
-        return render(request, 'student/academics.html',)
+        return redirect('internals')
 
 def internals(request):
     if request.user.is_staff:  
-        return render(request, 'console/academics/internals.html',)
+        formset = modelformset_factory(Internal, fields=('student','marks1','marks2','marks3'), extra=0)
+        search = request.GET.get('subject-query')
+        if request.method == "POST":
+            forms=formset(request.POST)
+            if forms.is_valid():
+                forms.save()
+                return redirect('assigned_class')
+        forms = formset(queryset=(Internal.objects.filter(subject__subcode=search)))
+        return render(request, 'console/academics/internals.html',{'forms':forms})
     else:
         context={
             'internals1': Internal.objects.filter(student__username=request.user.username).filter(subject__sem=1),
@@ -40,9 +53,26 @@ def internals(request):
         }
         return render(request, 'student/academics/internals.html',context)
 
-def semesters(request):
+def assigned_sem(request):
     if request.user.is_staff:  
-        return render(request, 'console/academics/semesters.html',)
+        context={
+            'classes': SemAssign.objects.filter(staff__username=request.user.username)
+        }
+        return render(request, 'console/academics/assigned_sem.html', context)
+    else:
+        return redirect('semesters')
+
+def semesters(request):
+    if request.user.is_staff: 
+        formset = modelformset_factory(Semester, fields=('student','subject','grade','result'), extra=0)
+        search = request.GET.get('subject-query')
+        if request.method == "POST":
+            forms=formset(request.POST)
+            if forms.is_valid():
+                forms.save()
+                return redirect('assigned_sem')
+        forms = formset(queryset=(Semester.objects.filter(subject__subcode=search))) 
+        return render(request, 'console/academics/semesters.html', {'forms':forms})
     else:
         context={
             'semesters1': Semester.objects.filter(student__username=request.user.username).filter(subject__sem=1),

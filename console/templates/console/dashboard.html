@@ -1,39 +1,247 @@
-{% load staticfiles %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=a, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-</head>
-<body>
-    <div class="row">
-        <div class="right">
-                <li class="head">{{user.username}}</li>
-                <li><a class="active" href="{% url 'dashboard' %}"><i class="fa fa-tachometer"></i><br>Dashboard</a></li>
-                <li><a href="{% url 'academics' %}"><i class="fa fa-bar-chart"></i><br>Academics</a></li>
-                <li><a href="{% url 'resources' %}"><i class="fa fa-briefcase"></i><br>Resources</a></li>
-                <li><a href="{% url 'register' %}"><i class="fa fa-user-plus"></i><br>New User</a></li>
-                <li><a href="{% url 'help' %}"><i class="fa fa-info" style="font-size: 16px; padding-right: 10px"></i> Help</a></li>
-                <li></li>
-        </div>
-        <div class="left">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: right; height: 79">
-                <a class="navbar-brand" href="{% url 'dashboard' %}" style="font-size: 32px; margin-top: -7px; padding-right: 10px">Student Analytica</a>
-                <a href="{% url 'logout' %}"><i class="fa fa-sign-out" style="color: rgb(31, 31, 31); font-size: 24px"></i></a>
-            </nav>
-            <div class="row" >
-                <div style="width: 50%; padding: 2%">
-                    Left
-                </div>
-                <div style="width: 30%; padding-top: 10%">
-                    Right
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+</div>
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Academics</h1>
+</div>
+<div class="row">
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="{% url 'internals' %}" style="text-decoration: none;">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Academics</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Internal Marks</div>
+                            <span class="text-xs">Internal marks portal</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
-</body>
-</html>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="{% url 'semesters' %}" style="text-decoration: none;">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Academics</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Semester Marks</div>
+                            <span class="text-xs">Semester marks portal</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-book-reader fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="{% url 'semesters' %}" style="text-decoration: none;">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Academics</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Attendance</div>
+                            <span class="text-xs">Attendance portal</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Add new records</h1>
+</div>
+<div class="row">
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="#" style="text-decoration: none;">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">New Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Student</div>
+                            <span class="text-xs">Add a new record a new Student</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="#" style="text-decoration: none;">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">New Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Subject</div>
+                            <span class="text-xs">Add a new record a new Subject</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-book-reader fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="#" style="text-decoration: none;">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">New Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Grade</div>
+                            <span class="text-xs">Add a new record a new Grade</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-trophy fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+    
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Edit existing records</h1>
+</div>
+<div class="row">
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="#" style="text-decoration: none;">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Edit Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Student</div>
+                            <span class="text-xs">Edit a record of a Student</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="#" style="text-decoration: none;">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Edit Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Subject</div>
+                            <span class="text-xs">Edit a record of a Subject</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-book-reader fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="#" style="text-decoration: none;">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Edit Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Grade</div>
+                            <span class="text-xs">Edit a record of a Grade</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-trophy fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Delete records</h1>
+</div>
+<div class="row">
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="#" style="text-decoration: none;">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Delete Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Student</div>
+                            <span class="text-xs">Delete a record of a Student</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="#" style="text-decoration: none;">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Delete Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Subject</div>
+                            <span class="text-xs">Delete a record of a Subject</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-book-reader fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a href="#" style="text-decoration: none;">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Delete Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Grade</div>
+                            <span class="text-xs">Delete a record of a Grade</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-trophy fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock content %}

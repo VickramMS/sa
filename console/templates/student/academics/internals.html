@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div style="padding: 2%">
     <h1 class="h3 mb-0 text-gray-800">Internal Marks</h1>
+    
+    <div class="table-responsive">
     {% for internal in internals8 %}
     {% if forloop.counter == 1 %}
     <table class="table" style="margin-top: 2%">
@@ -12,9 +14,8 @@
         <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
             <tr>
             <th scope="col">S.no</th>
-            <th scope="col">Subject Code</th>
-            <th scope="col">Subject Name</th>
-            <th scope="col">Semester</th>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Title</th>
             <th scope="col">Tot. Marks</th>
             <th scope="col">I1</th>
             <th scope="col">I2</th>
@@ -28,7 +29,6 @@
             <th scope="row">{{forloop.counter}}</th>
             <td>{{internal.subject.subcode}}</td>
             <td>{{internal.subject.subname}}</td>
-            <td>{{internal.subject.sem}}</td>
             <td>{{internal.marks}}</td>
             <td>{{internal.marks1}}</td>
             <td>{{internal.marks2}}</td>
@@ -39,7 +39,8 @@
         <tr></tr>
     {% endfor %}
     </table>
-
+    </div>
+    <div class="table-responsive">
     {% for internal in internals7 %}
     {% if forloop.counter == 1 %}
     <table class="table" style="margin-top: 2%">
@@ -48,9 +49,8 @@
         <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
             <tr>
             <th scope="col">S.no</th>
-            <th scope="col">Subject Code</th>
-            <th scope="col">Subject Name</th>
-            <th scope="col">Semester</th>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Title</th>
             <th scope="col">Tot. Marks</th>
             <th scope="col">I1</th>
             <th scope="col">I2</th>
@@ -64,7 +64,6 @@
             <th scope="row">{{forloop.counter}}</th>
             <td>{{internal.subject.subcode}}</td>
             <td>{{internal.subject.subname}}</td>
-            <td>{{internal.subject.sem}}</td>
             <td>{{internal.marks}}</td>
             <td>{{internal.marks1}}</td>
             <td>{{internal.marks2}}</td>
@@ -75,7 +74,8 @@
         <tr></tr>
     {% endfor %}
     </table>
-
+    </div>
+    <div class="table-responsive">
     {% for internal in internals6 %}
     {% if forloop.counter == 1 %}
     <table class="table" style="margin-top: 2%">
@@ -84,9 +84,8 @@
         <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
             <tr>
             <th scope="col">S.no</th>
-            <th scope="col">Subject Code</th>
-            <th scope="col">Subject Name</th>
-            <th scope="col">Semester</th>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Title</th>
             <th scope="col">Tot. Marks</th>
             <th scope="col">I1</th>
             <th scope="col">I2</th>
@@ -100,7 +99,6 @@
             <th scope="row">{{forloop.counter}}</th>
             <td>{{internal.subject.subcode}}</td>
             <td>{{internal.subject.subname}}</td>
-            <td>{{internal.subject.sem}}</td>
             <td>{{internal.marks}}</td>
             <td>{{internal.marks1}}</td>
             <td>{{internal.marks2}}</td>
@@ -111,7 +109,8 @@
         <tr></tr>
     {% endfor %}
     </table>
-
+    </div>
+    <div class="table-responsive">
     {% for internal in internals5 %}
     {% if forloop.counter == 1 %}
     <table class="table" style="margin-top: 2%">
@@ -120,9 +119,8 @@
         <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
             <tr>
             <th scope="col">S.no</th>
-            <th scope="col">Subject Code</th>
-            <th scope="col">Subject Name</th>
-            <th scope="col">Semester</th>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Title</th>
             <th scope="col">Tot. Marks</th>
             <th scope="col">I1</th>
             <th scope="col">I2</th>
@@ -136,7 +134,6 @@
             <th scope="row">{{forloop.counter}}</th>
             <td>{{internal.subject.subcode}}</td>
             <td>{{internal.subject.subname}}</td>
-            <td>{{internal.subject.sem}}</td>
             <td>{{internal.marks}}</td>
             <td>{{internal.marks1}}</td>
             <td>{{internal.marks2}}</td>
@@ -147,7 +144,8 @@
         <tr></tr>
     {% endfor %}
     </table>
-
+    </div>
+    <div class="table-responsive">
     {% for internal in internals4 %}
     {% if forloop.counter == 1 %}
     <table class="table" style="margin-top: 2%">
@@ -156,9 +154,8 @@
         <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
             <tr>
             <th scope="col">S.no</th>
-            <th scope="col">Subject Code</th>
-            <th scope="col">Subject Name</th>
-            <th scope="col">Semester</th>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Title</th>
             <th scope="col">Tot. Marks</th>
             <th scope="col">I1</th>
             <th scope="col">I2</th>
@@ -172,7 +169,6 @@
             <th scope="row">{{forloop.counter}}</th>
             <td>{{internal.subject.subcode}}</td>
             <td>{{internal.subject.subname}}</td>
-            <td>{{internal.subject.sem}}</td>
             <td>{{internal.marks}}</td>
             <td>{{internal.marks1}}</td>
             <td>{{internal.marks2}}</td>
@@ -183,7 +179,8 @@
         <tr></tr>
     {% endfor %}
     </table>
-
+    </div>
+    <div class="table-responsive">
     {% for internal in internals3 %}
     {% if forloop.counter == 1 %}
     <table class="table" style="margin-top: 2%">
@@ -192,9 +189,8 @@
         <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
             <tr>
             <th scope="col">S.no</th>
-            <th scope="col">Subject Code</th>
-            <th scope="col">Subject Name</th>
-            <th scope="col">Semester</th>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Title</th>
             <th scope="col">Tot. Marks</th>
             <th scope="col">I1</th>
             <th scope="col">I2</th>
@@ -208,7 +204,6 @@
             <th scope="row">{{forloop.counter}}</th>
             <td>{{internal.subject.subcode}}</td>
             <td>{{internal.subject.subname}}</td>
-            <td>{{internal.subject.sem}}</td>
             <td>{{internal.marks}}</td>
             <td>{{internal.marks1}}</td>
             <td>{{internal.marks2}}</td>
@@ -219,7 +214,8 @@
         <tr></tr>
     {% endfor %}
     </table>
-
+    </div>
+    <div class="table-responsive">
     {% for internal in internals2 %}
     {% if forloop.counter == 1 %}
     <table class="table" style="margin-top: 2%">
@@ -228,9 +224,8 @@
         <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
             <tr>
             <th scope="col">S.no</th>
-            <th scope="col">Subject Code</th>
-            <th scope="col">Subject Name</th>
-            <th scope="col">Semester</th>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Title</th>
             <th scope="col">Tot. Marks</th>
             <th scope="col">I1</th>
             <th scope="col">I2</th>
@@ -244,7 +239,6 @@
             <th scope="row">{{forloop.counter}}</th>
             <td>{{internal.subject.subcode}}</td>
             <td>{{internal.subject.subname}}</td>
-            <td>{{internal.subject.sem}}</td>
             <td>{{internal.marks}}</td>
             <td>{{internal.marks1}}</td>
             <td>{{internal.marks2}}</td>
@@ -255,7 +249,8 @@
         <tr></tr>
     {% endfor %}
     </table>
-
+    </div>
+    <div class="table-responsive">
     {% for internal in internals1 %}
     {% if forloop.counter == 1 %}
     <table class="table" style="margin-top: 2%">
@@ -264,9 +259,8 @@
         <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
             <tr>
             <th scope="col">S.no</th>
-            <th scope="col">Subject Code</th>
-            <th scope="col">Subject Name</th>
-            <th scope="col">Semester</th>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Title</th>
             <th scope="col">Tot. Marks</th>
             <th scope="col">I1</th>
             <th scope="col">I2</th>
@@ -280,7 +274,6 @@
             <th scope="row">{{forloop.counter}}</th>
             <td>{{internal.subject.subcode}}</td>
             <td>{{internal.subject.subname}}</td>
-            <td>{{internal.subject.sem}}</td>
             <td>{{internal.marks}}</td>
             <td>{{internal.marks1}}</td>
             <td>{{internal.marks2}}</td>
@@ -291,6 +284,7 @@
         <tr></tr>
     {% endfor %}
     </table>
+    </div>
     <span>* Any errors/discrepancy shall be immedietly brought into the attention of the faculty advisor</span>
 </div>
 {% endblock content %}

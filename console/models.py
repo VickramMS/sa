@@ -40,14 +40,25 @@ class Grade(models.Model):
         return self.letter
 
 
-class Semester(models.Model):    
+class Semester(models.Model):  
+    RESULT = (('RA','Reappearance is Required'),('W','Withdrawal'),('SE','Sports Exemption'),('*Ab','Absent for Univeristy Exam'),('PASS','PASS'))  
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     grade = models.ForeignKey(Grade, on_delete=models.CASCADE, default=1)
-
+    result = models.CharField(max_length=30, choices=RESULT, default='PASS')
     def __str__(self):
         return f'{self.student.profile.Aureg}-{self.subject.subcode}' 
 
+class SubjectAssign(models.Model):
+    staff = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.staff}-{self.subject.subcode}'
 
-     
+class SemAssign(models.Model):
+    staff = models.ForeignKey(User, on_delete=models.CASCADE)
+    semester = models.ForeignKey(Subject, on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return f'{self.staff.username}'
