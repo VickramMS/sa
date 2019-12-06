@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div style="padding: 2%">
+    <h1 class="h3 mb-0 text-gray-800">Semester Marks</h1>
+    {% for semester in semesters8 %}
+    {% if forloop.counter == 1 %}
+    <table class="table" style="margin-top: 2%">
+        <br>
+        <h5 class="h5 mb-0 text-gray-800">Semester - {{semester.subject.sem}}</h5>
+        <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
+            <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Subject Code</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Tot. Marks</th>
+            <th scope="col">I1</th>
+            <th scope="col">I2</th>
+            <th scope="col">I3</th>
+            <th scope="col">Avg. Marks(20)</th>
+            </tr>
+        </thead>
+    {% endif %} 
+        <tbody style="text-align: center; color: black"> 
+            <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{semester.subject.subcode}}</td>
+            <td>{{semester.subject.subname}}</td>
+            <td>{{semester.subject.sem}}</td>
+            <td>{{semester.marks}}</td>
+            <td>{{semester.marks1}}</td>
+            <td>{{semester.marks2}}</td>
+            <td>{{semester.marks3}}</td>
+            <td>{{semester.marksob}}</td>
+            </tr>
+        </tbody>
+        <tr></tr>
+    {% endfor %}
+    </table>
+
+    {% for semester in semesters7 %}
+    {% if forloop.counter == 1 %}
+    <table class="table" style="margin-top: 2%">
+        <br>
+        <h5 class="h5 mb-0 text-gray-800">Semester - {{semester.subject.sem}}</h5>
+        <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
+            <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Subject Code</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Tot. Marks</th>
+            <th scope="col">I1</th>
+            <th scope="col">I2</th>
+            <th scope="col">I3</th>
+            <th scope="col">Avg. Marks(20)</th>
+            </tr>
+        </thead>
+    {% endif %} 
+        <tbody style="text-align: center; color: black"> 
+            <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{semester.subject.subcode}}</td>
+            <td>{{semester.subject.subname}}</td>
+            <td>{{semester.subject.sem}}</td>
+            <td>{{semester.marks}}</td>
+            <td>{{semester.marks1}}</td>
+            <td>{{semester.marks2}}</td>
+            <td>{{semester.marks3}}</td>
+            <td>{{semester.marksob}}</td>
+            </tr>
+        </tbody>
+        <tr></tr>
+    {% endfor %}
+    </table>
+
+    {% for semester in semesters6 %}
+    {% if forloop.counter == 1 %}
+    <table class="table" style="margin-top: 2%">
+        <br>
+        <h5 class="h5 mb-0 text-gray-800">Semester - {{semester.subject.sem}}</h5>
+        <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
+            <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Subject Code</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Tot. Marks</th>
+            <th scope="col">I1</th>
+            <th scope="col">I2</th>
+            <th scope="col">I3</th>
+            <th scope="col">Avg. Marks(20)</th>
+            </tr>
+        </thead>
+    {% endif %} 
+        <tbody style="text-align: center; color: black"> 
+            <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{semester.subject.subcode}}</td>
+            <td>{{semester.subject.subname}}</td>
+            <td>{{semester.subject.sem}}</td>
+            <td>{{semester.marks}}</td>
+            <td>{{semester.marks1}}</td>
+            <td>{{semester.marks2}}</td>
+            <td>{{semester.marks3}}</td>
+            <td>{{semester.marksob}}</td>
+            </tr>
+        </tbody>
+        <tr></tr>
+    {% endfor %}
+    </table>
+
+    {% for semester in semesters5 %}
+    {% if forloop.counter == 1 %}
+    <table class="table" style="margin-top: 2%">
+        <br>
+        <h5 class="h5 mb-0 text-gray-800">Semester - {{semester.subject.sem}}</h5>
+        <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
+            <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Subject Code</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Tot. Marks</th>
+            <th scope="col">I1</th>
+            <th scope="col">I2</th>
+            <th scope="col">I3</th>
+            <th scope="col">Avg. Marks(20)</th>
+            </tr>
+        </thead>
+    {% endif %} 
+        <tbody style="text-align: center; color: black"> 
+            <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{semester.subject.subcode}}</td>
+            <td>{{semester.subject.subname}}</td>
+            <td>{{semester.subject.sem}}</td>
+            <td>{{semester.marks}}</td>
+            <td>{{semester.marks1}}</td>
+            <td>{{semester.marks2}}</td>
+            <td>{{semester.marks3}}</td>
+            <td>{{semester.marksob}}</td>
+            </tr>
+        </tbody>
+        <tr></tr>
+    {% endfor %}
+    </table>
+
+    {% for semester in semesters4 %}
+    {% if forloop.counter == 1 %}
+    <table class="table" style="margin-top: 2%">
+        <br>
+        <h5 class="h5 mb-0 text-gray-800">Semester - {{semester.subject.sem}}</h5>
+        <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
+            <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Subject Code</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Tot. Marks</th>
+            <th scope="col">I1</th>
+            <th scope="col">I2</th>
+            <th scope="col">I3</th>
+            <th scope="col">Avg. Marks(20)</th>
+            </tr>
+        </thead>
+    {% endif %} 
+        <tbody style="text-align: center; color: black"> 
+            <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{semester.subject.subcode}}</td>
+            <td>{{semester.subject.subname}}</td>
+            <td>{{semester.subject.sem}}</td>
+            <td>{{semester.marks}}</td>
+            <td>{{semester.marks1}}</td>
+            <td>{{semester.marks2}}</td>
+            <td>{{semester.marks3}}</td>
+            <td>{{semester.marksob}}</td>
+            </tr>
+        </tbody>
+        <tr></tr>
+    {% endfor %}
+    </table>
+
+    {% for semester in semesters3 %}
+    {% if forloop.counter == 1 %}
+    <table class="table" style="margin-top: 2%">
+        <br>
+        <h5 class="h5 mb-0 text-gray-800">Semester - {{semester.subject.sem}}</h5>
+        <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
+            <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Subject Code</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Tot. Marks</th>
+            <th scope="col">I1</th>
+            <th scope="col">I2</th>
+            <th scope="col">I3</th>
+            <th scope="col">Avg. Marks(20)</th>
+            </tr>
+        </thead>
+    {% endif %} 
+        <tbody style="text-align: center; color: black"> 
+            <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{semester.subject.subcode}}</td>
+            <td>{{semester.subject.subname}}</td>
+            <td>{{semester.subject.sem}}</td>
+            <td>{{semester.marks}}</td>
+            <td>{{semester.marks1}}</td>
+            <td>{{semester.marks2}}</td>
+            <td>{{semester.marks3}}</td>
+            <td>{{semester.marksob}}</td>
+            </tr>
+        </tbody>
+        <tr></tr>
+    {% endfor %}
+    </table>
+
+    {% for semester in semesters2 %}
+    {% if forloop.counter == 1 %}
+    <table class="table" style="margin-top: 2%">
+        <br>
+        <h5 class="h5 mb-0 text-gray-800">Semester - {{semester.subject.sem}}</h5>
+        <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
+            <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Subject Code</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Tot. Marks</th>
+            <th scope="col">I1</th>
+            <th scope="col">I2</th>
+            <th scope="col">I3</th>
+            <th scope="col">Avg. Marks(20)</th>
+            </tr>
+        </thead>
+    {% endif %} 
+        <tbody style="text-align: center; color: black"> 
+            <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{semester.subject.subcode}}</td>
+            <td>{{semester.subject.subname}}</td>
+            <td>{{semester.subject.sem}}</td>
+            <td>{{semester.marks}}</td>
+            <td>{{semester.marks1}}</td>
+            <td>{{semester.marks2}}</td>
+            <td>{{semester.marks3}}</td>
+            <td>{{semester.marksob}}</td>
+            </tr>
+        </tbody>
+        <tr></tr>
+    {% endfor %}
+    </table>
+
+    {% for semester in semesters1 %}
+    {% if forloop.counter == 1 %}
+    <table class="table" style="margin-top: 2%">
+        <br>
+        <h5 class="h5 mb-0 text-gray-800">Semester - {{semester.subject.sem}}</h5>
+        <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
+            <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Subject Code</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Tot. Marks</th>
+            <th scope="col">I1</th>
+            <th scope="col">I2</th>
+            <th scope="col">I3</th>
+            <th scope="col">Avg. Marks(20)</th>
+            </tr>
+        </thead>
+    {% endif %} 
+        <tbody style="text-align: center; color: black"> 
+            <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{semester.subject.subcode}}</td>
+            <td>{{semester.subject.subname}}</td>
+            <td>{{semester.subject.sem}}</td>
+            <td>{{semester.marks}}</td>
+            <td>{{semester.marks1}}</td>
+            <td>{{semester.marks2}}</td>
+            <td>{{semester.marks3}}</td>
+            <td>{{semester.marksob}}</td>
+            </tr>
+        </tbody>
+        <tr></tr>
+    {% endfor %}
+    </table>
+    <span>* Any errors/discrepancy shall be immedietly brought into the attention of the faculty advisor</span>
+</div>
+{% endblock content %}

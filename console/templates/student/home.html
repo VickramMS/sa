@@ -1,0 +1,39 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <title>Student Analytica</title>
+</head>
+<body class="body">
+    <div class="login-card">
+        <div class="c1">
+            <i class="fa fa-user" style="font-size: 150"></i>
+            <br>
+            <hr class="divider">
+            <label class="label">Login</label>
+        </div>      
+        <div class="c2">
+            <h3 class="text">Student Analytica</h3>
+            <br>
+            <br>
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <input class="form-control form-in" type="email" name="email" placeholder="E-mail">
+                <br>
+                <input class="form-control form-in" type="password" name="password" placeholder="Password">
+                <br>
+                <button class="btn btn-primary">Submit</button>
+                <div class="text">
+                    <br>
+                    <a>Kindly contact your Faculty Advisor or Head of the Department or System Admin if you have any issues with the login</a>
+                </div>
+            </form>
+        </div>
+    </div>    
+</body>
+</html>

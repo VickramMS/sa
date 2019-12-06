@@ -1,0 +1,334 @@
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=a, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+    <div class="row">
+        <div class="right">
+                <li class="head">{{user.username}}</li>
+                <li><a href="{% url 'dashboard' %}"><i class="fa fa-tachometer"></i><br>Dashboard</a></li>
+                <li><a class="active" href="{% url 'academics' %}"><i class="fa fa-bar-chart"></i><br>academics</a></li>
+                <li><a href="{% url 'resources' %}"><i class="fa fa-briefcase"></i><br>Resources</a></li>
+                <li><a href="{% url 'help' %}"><i class="fa fa-info" style="font-size: 16px; padding-right: 10px"></i> Help</a></li>
+                <li></li>
+        </div>
+        <div class="left">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: right; height: 79">
+                <a class="navbar-brand" href="{% url 'dashboard' %}" style="font-size: 32px; margin-top: -7px; padding-right: 10px">Student Analytica</a>
+                <a href="{% url 'logout' %}"><i class="fa fa-sign-out" style="color: rgb(31, 31, 31); font-size: 24px"></i></a>
+            </nav>
+            <div class="row" >
+                <div style="width: 50%; padding: 2%">
+                        <div class="row1">
+                                <form action="{% url 'editprofile' request.user.pk %}" method="POST" enctype="multipart/form-data" >
+                                    {% csrf_token %}
+                                    <div>
+                                        <div>
+                                            <label class="pad">Academic Details</label>
+                                            <hr>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Roll Number</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px" required
+                                                    value="{{user.profile.Roll}}" placeholder="Roll Number" name="roll">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Anna University Reg. No</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.Aureg}}" placeholder="Anna Univ Reg. No"
+                                                    name="auregno">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Department</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control" style="margin-top: -5px" placeholder="Department"
+                                                    name="dept">
+                                                    <option value="MECH">Mechanical</option>
+                                                    <option value="CIVIL">Civil</option>
+                                                    <option value="EEE">Electrical and Elctronics</option>
+                                                    <option value="ECE">Elctronics and Communications</option>
+                                                    <option value="CSE">Computer Science</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Year of Study</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control" style="margin-top: -5px"
+                                                    placeholder="Year of study" name="year">
+                                                    <option value="FY">First Year</option>
+                                                    <option value="SY">Second Year</option>
+                                                    <option value="TY">Third Year</option>
+                                                    <option value="LY">Last Year</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>College</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control" style="margin-top: -5px" placeholder="College"
+                                                    name="college">
+                                                    <option value="GCEBODI">Government College of Engineering, Bodinayakkur
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Hostage</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control" style="margin-top: -5px" placeholder="Hostage"
+                                                    name="hostage">
+                                                    <option value="DS">Day Scholar</option>
+                                                    <option value="HSTL">Hostel</option>
+                                                    <option value="PG">Paying Guest</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Medium of Transport</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control" style="margin-top: -5px"
+                                                    placeholder="Transport Medium" name="medium">
+                                                    <option value="SW">Self Walk</option>
+                                                    <option value="SV">Self Vehicle</option>
+                                                    <option value="PT">Public Transport</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="pad">Personal Details</label>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>First Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.FirstName}}" placeholder="First Name"
+                                                    name="FirstName">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Last Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.LastName}}" placeholder="Last Name" name="LastName">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Father's Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.FatherName}}" placeholder="Father's Name"
+                                                    name="FatherName">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Mother's Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.MotherName}}" placeholder="Mother's Name"
+                                                    name="MotherName">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Date of Birth</label>
+                                            </div>
+                                            <div class="col-md-6" style="float: left">
+                                                    <input class="form-control" style="margin-top: -5px; width: 60px; float: left; margin-right: 10px" value="{{user.profile.BDay}}"
+                                                    name="bday" placeholder="Day">
+                                                    <select class="form-control" style="margin-top: -5px; width: 120px; float: left; margin-right: 10px" placeholder="Month"
+                                                    name="bmonth" value='{{user.profile.get_BMonth_display}}'>
+                                                        <option value="JAN">January</option>
+                                                        <option value="FEB">February</option>
+                                                        <option value="MAR">March</option>
+                                                        <option value="APR">April</option>
+                                                        <option value="MAY">May/option>
+                                                        <option value="JUN">June</option>
+                                                        <option value="JUL">July</option>
+                                                        <option value="AUG">August</option>
+                                                        <option value="SEP">September</option>
+                                                        <option value="OCT">October</option>
+                                                        <option value="NOV">November</option>
+                                                        <option value="DEC">December</option>
+                                                    </select>
+                                                    <input class="form-control" style="margin-top: -5px; width: 70px" value="{{user.profile.BYear}}"
+                                                    name="byear" placeholder="Year">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Age</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.Age}}" placeholder="Age" name="Age">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Sex</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control" style="margin-top: -5px" placeholder="Sex"
+                                                    name="gender">
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="trans">Transgender</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Address</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.Address1}}" style="padding-bottom: 10px"
+                                                    placeholder="Door No:" name="doorno">
+                                                <input class="form-control" style="margin-top: 10px"
+                                                    value="{{user.profile.Address2}}" style="padding-bottom: 10px"
+                                                    placeholder="Street" name="street">
+                                                <input class="form-control" style="margin-top: 10px"
+                                                    value="{{user.profile.Address3}}" style="padding-bottom: 10px"
+                                                    placeholder="Landmark" name="landmark">
+                                                <input class="form-control" style="margin-top: 10px"
+                                                    value="{{user.profile.Address4}}" style="padding-bottom: 10px"
+                                                    placeholder="Area or Colony" name="area">
+                                                <input class="form-control" style="margin-top: 10px"
+                                                    value="{{user.profile.City}}" style="padding-bottom: 10px"
+                                                    placeholder="City" name="city">
+                                                <input class="form-control" style="margin-top: 10px"
+                                                    value="{{user.profile.Pincode}}" placeholder="Pincode" name="pincode">
+                                                <input class="form-control" style="margin-top: 10px"
+                                                    value="{{user.profile.get_State_display}}" style="padding-bottom: 10px"
+                                                    placeholder="State" name="state">
+                                                <input class="form-control" style="margin-top: 10px"
+                                                    value="{{user.profile.Country}}" style="padding-bottom: 10px"
+                                                    placeholder="Country" name="country">
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Phone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.YourPhone}}" placeholder="Phone" name="phone">
+                                                <input type="checkbox" placeholder="WhatsApp Connected" name="wconnected"
+                                                    value="True" style="margin-top: 15px"><a style="padding: 15px;">WhatsApp Connected</a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Father's Phone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.FatherPhone}}" placeholder="Father's Phone"
+                                                    name="fathersphone">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Mother's Phone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.MotherPhone}}" placeholder="Mother's Phone"
+                                                    name="mothersphone">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <label class="pad">Identity Details</label>
+                                            <hr>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Aadhar Number</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.Aadhar}}" placeholder="Aadhar Number" name="aadhar">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>PassPort Number</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.PassPort}}" placeholder="Passport Number"
+                                                    name="passport">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>VoterID Number</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.VoterID}}" placeholder="VoterId Number" name="voter">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>License Number</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" style="margin-top: -5px"
+                                                    value="{{user.profile.License}}" placeholder="License Number"
+                                                    name="license">
+        
+                                            </div>
+        
+                                        </div>
+                                        <button class="btn btn-primary"> Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                </div>
+                <div style="width: 30%; padding-top: 10%">
+                    Right
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
