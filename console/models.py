@@ -32,15 +32,22 @@ class Internal(models.Model):
         return f'{self.student.profile.Aureg}-SEM.{self.subject.sem}'
 
 
+class Grade(models.Model):
+    points = models.IntegerField()
+    letter = models.CharField(max_length=1)
+
+    def __str__(self):
+        return self.letter
+
+
 class Semester(models.Model):    
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    marksob = models.IntegerField(default=0)
-    markstot = models.IntegerField(default=100)
+    grade = models.ForeignKey(Grade, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return f'{self.student.profile.Aureg}-{self.subject.subcode}' 
 
 
 
-        
+     
