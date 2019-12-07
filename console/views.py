@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.views.generic import View
 from django.utils import timezone 
-from .models import Internal, Semester, SubjectAssign, SemAssign
+from .models import Internal, Semester, SubjectAssign, SemAssign,Subject
 from django.forms import modelformset_factory
+from .forms import SubjectAssignForm, SemAssignForm
 
 def home(request):
     if request.user.is_authenticated:
@@ -25,7 +25,11 @@ def home(request):
 
 def assign_int(request):
     if request.user.is_staff:
-        return render(request, 'console/jobs/assign_int.html')
+        form=SubjectAssignForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('assign_int')
+        return render(request, 'console/jobs/assign_int.html',{'form':form})
     else:
         return redirect('dashboard')
 
@@ -64,7 +68,11 @@ def internals(request):
 
 def assign_sem(request):
     if request.user.is_staff:
-        return render(request, 'console/jobs/assign_sem.html')
+        form=SemAssignForm(request.POST)
+        if form.is_valid():
+            SemAssign=form.save()
+            return redirect('dashboard')
+        return render(request, 'console/jobs/assign_sem.html',{'form':form})
     else:
         return redirect('dashboard')
 

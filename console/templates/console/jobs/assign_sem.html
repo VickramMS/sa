@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% load widget_tweaks %}
 <div class="row">
     <div class="col-lg-6 mb-4" style="margin: auto">
         <div class="card shadow mb-4">
@@ -7,9 +8,18 @@
                 <h6 class="m-0 font-weight-bold text-primary text-center">JOB ASSIGN - SEMESTER MARKS</h6>
             </div>
             <div class="card-body">
+                <form action="{% url 'assign_sem' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="">Staff Name</label>
+                    {% render_field form.staff|add_class:"form-control" %}
+                    <br>
+                    <label for="">Subject</label>
+                    {% render_field form.semester|add_class:"form-control" %}
+                    <br>
+                    <button type="submit" class="btn btn-primary">Assign Job</button>
+                </form>
             </div>
         </div>
-
     </div>
 </div>
 
