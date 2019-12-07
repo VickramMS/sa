@@ -7,7 +7,7 @@ class Subject(models.Model):
     CRED = (('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'))
     SEM = (('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8'))
     subname = models.CharField(max_length=100)
-    subcode = models.CharField(max_length=7)
+    subcode = models.CharField(max_length=7, unique=True)
     subcred = models.CharField(max_length=1, choices=CRED, default='1')
     sem = models.CharField(max_length=1, choices=SEM, default='1')
 
@@ -34,7 +34,7 @@ class Internal(models.Model):
 
 class Grade(models.Model):
     points = models.IntegerField()
-    letter = models.CharField(max_length=1)
+    letter = models.CharField(max_length=1, unique=True)
 
     def __str__(self):
         return self.letter

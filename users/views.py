@@ -2,17 +2,26 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm
+from .forms import AddStudentForm, AddStaffForm
 from django.views.generic import View
 
-def register(request):
+def add_student(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = AddStudentForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            return redirect('register')
+            return redirect('add_student')
     else:
-        form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
+        form = AddStudentForm()
+    return render(request, 'console/jobs/add_student.html', {'form': form})
+
+def add_staff(request):
+    if request.method == 'POST':
+        form = AddStaffForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_staff')
+    else:
+        form = AddStaffForm()
+    return render(request, 'console/jobs/add_staff.html', {'form': form})
 

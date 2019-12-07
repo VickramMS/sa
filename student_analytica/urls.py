@@ -25,7 +25,8 @@ urlpatterns = [
     path('', include('console.urls')),
     path('login/',console_views.Login.as_view(),name='login'),
     path('logout/',console_views.LogoutView.as_view(),name='logout'),
-    path('register/', user_views.register, name='register'),
+    path('jobs/add_student/', user_views.add_student, name='add_student'),
+    path('jobs/add_staff/', user_views.add_staff, name='add_staff'),
 
 
 ]

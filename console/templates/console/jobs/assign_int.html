@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% load widget_tweaks %}
+
 <div class="row">
     <div class="col-lg-6 mb-4" style="margin: auto">
         <div class="card shadow mb-4">
@@ -8,6 +9,16 @@
                 <h6 class="m-0 font-weight-bold text-primary text-center">JOB ASSIGN - INTERNAL MARKS</h6>
             </div>
             <div class="card-body">
+                <form action="{% url 'assign_int' %}" method="GET">
+                    <label for="">Department</label>
+                    <input type="text" class="form-control" name="department">
+                    <br>
+                    <label for="">Subject</label>
+                    <input type="text" class="form-control" name="subject">
+                    <br>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </form>
+                <hr>
                 <form action="{% url 'assign_int' %}" method="POST">
                     {% csrf_token %}
                     <label for="">Staff Name</label>

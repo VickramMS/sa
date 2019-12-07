@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+{% load widget_tweaks %}
+<div class="row">
+    <div class="col-lg-6 mb-4" style="margin: auto">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-center">EDIT RECORD - EDIT SUBJECT RECORD</h6>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'add_subject' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="">Subject</label>
+                    {% render_field form.subname|add_class:"form-control" %}
+                    <br>
+                    <label for="">Subject Code</label>
+                    {% render_field form.subcode|add_class:"form-control" %}
+                    <br>
+                    <label for="">Subject Credit</label>
+                    {% render_field form.subcred|add_class:"form-control" %}
+                    <br>
+                    <label for="">Semester</label>
+                    {% render_field form.sem|add_class:"form-control" %}
+                    <br>
+                    <button type="submit" class="btn btn-primary">Add New Subject</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

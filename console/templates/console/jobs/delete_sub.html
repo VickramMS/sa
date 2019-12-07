@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Subject - Delete Records</h1>
+</div>
+
+<div class="row">
+    {% for subject in subjects %}
+    <div class="col-xl-4 col-md-6 mb-4">
+        <a style="text-decoration: none;" data-toggle="modal" data-target="#myModal">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Subject</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{subject.subcode}}</div>
+                            <span class="text-xs">{{subject.subname}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-book-reader fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: rgb(0, 68, 255);">Delete - {{subject.subcode}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p style="color: red;">Are you sure you want to delete this SUBJECT - {{subject.subname}}</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'delete_sub' %}{{subject.id}}/">
+                        <div class="btn btn-outline-danger">Delete</div>
+                    </a>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

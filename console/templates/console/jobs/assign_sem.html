@@ -8,6 +8,16 @@
                 <h6 class="m-0 font-weight-bold text-primary text-center">JOB ASSIGN - SEMESTER MARKS</h6>
             </div>
             <div class="card-body">
+                <form action="{% url 'assign_int' %}" method="GET">
+                    <label for="">Department</label>
+                    <input type="text" class="form-control" name="department">
+                    <br>
+                    <label for="">Subject</label>
+                    <input type="text" class="form-control" name="subject">
+                    <br>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </form>
+                <hr>
                 <form action="{% url 'assign_sem' %}" method="POST">
                     {% csrf_token %}
                     <label for="">Staff Name</label>

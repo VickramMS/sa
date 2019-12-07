@@ -6,9 +6,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.views.generic import View
 from django.utils import timezone 
-from .models import Internal, Semester, SubjectAssign, SemAssign,Subject
+from .models import Internal, Semester, SubjectAssign, SemAssign, Subject, Grade
 from django.forms import modelformset_factory
-from .forms import SubjectAssignForm, SemAssignForm
+from .forms import SubjectAssignForm, SemAssignForm, SubjectForm, GradeForm
+from django.contrib import messages
 
 def home(request):
     if request.user.is_authenticated:
@@ -26,9 +27,15 @@ def home(request):
 def assign_int(request):
     if request.user.is_staff:
         form=SubjectAssignForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('assign_int')
+        if request.method == "GET":
+            dept = request.GET.get('department')
+            sem = request.GET.get('subject')
+            form.fields['staff'].queryset = User.objects.filter(is_staff=True, profile__Department=dept)
+            form.fields['subject'].queryset = Subject.objects.filter(sem=sem)
+        if request.method == "POST":            
+            if form.is_valid():
+                form.save()
+                return redirect('assign_int')
         return render(request, 'console/jobs/assign_int.html',{'form':form})
     else:
         return redirect('dashboard')
@@ -69,9 +76,15 @@ def internals(request):
 def assign_sem(request):
     if request.user.is_staff:
         form=SemAssignForm(request.POST)
-        if form.is_valid():
-            SemAssign=form.save()
-            return redirect('dashboard')
+        if request.method == "GET":
+            dept = request.GET.get('department')
+            sem = request.GET.get('subject')
+            form.fields['staff'].queryset = User.objects.filter(is_staff=True, profile__Department=dept)
+            form.fields['semester'].queryset = Subject.objects.filter(sem=sem)
+        if request.method == "POST":            
+            if form.is_valid():
+                form.save()
+                return redirect('assign_sem')
         return render(request, 'console/jobs/assign_sem.html',{'form':form})
     else:
         return redirect('dashboard')
@@ -143,3 +156,109 @@ class LogoutView(View,LoginRequiredMixin):
         response=redirect('home')
         response.delete_cookie('role')
         return response
+
+def add_subject(request):
+    if request.user.is_staff:
+        form=SubjectForm(request.POST)
+        if form.is_valid():
+            Subject=form.save()
+            return redirect('add_subject')
+        return render(request, 'console/jobs/add_subject.html',{'form':form})
+    else:
+        return redirect('dashboard')
+
+def edit_sub(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            context={
+                'subjects': Subject.objects.all()
+            }
+            return render(request, 'console/jobs/edit_sub.html', context)
+        else:
+            return redirect('dashboard')
+
+def edit_sub_view(request, pk):
+    if request.user.is_staff:
+        obj = get_object_or_404(Subject, id=pk)
+        form = SubjectForm(request.POST or None, instance=obj)
+        context = {'form':form}
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save()
+            context = {'form':form}
+            return redirect('edit_sub_form')
+        return render(request, 'console/jobs/edit_sub_form.html', context)
+    else:
+        return redirect('edit_sub')
+
+def delete_sub(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            context={
+                'subjects': Subject.objects.all()
+            }
+            return render(request, 'console/jobs/delete_sub.html', context)
+        else:
+            return redirect('dashboard')
+
+def delete_sub_view(request, pk):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            obj = Subject.objects.filter(id=pk)
+            obj.delete()
+            return redirect('delete_sub')
+        return redirect('dashboard')
+   
+def add_grade(request):
+    if request.user.is_staff:
+        form=GradeForm(request.POST)
+        if form.is_valid():
+            Grade=form.save()
+            return redirect('add_grade')
+        return render(request, 'console/jobs/add_grade.html',{'form':form})
+    else:
+        return redirect('dashboard')
+
+def edit_grade(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            context={
+                'grades': Grade.objects.all()
+            }
+            return render(request, 'console/jobs/edit_grade.html', context)
+        else:
+            return redirect('dashboard')
+
+    
+def edit_grade_view(request, pk):
+    if request.user.is_staff:
+        obj = get_object_or_404(Grade, id=pk)
+        form = GradeForm(request.POST or None, instance=obj)
+        context = {'form':form}
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save()
+            context = {'form':form}
+            return redirect('edit_grade_form')
+        return render(request, 'console/jobs/edit_grade_form.html', context)
+    else:
+        return redirect('edit_grade')
+
+def delete_grade(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            context={
+                'grades': Grade.objects.all()
+            }
+            return render(request, 'console/jobs/delete_grade.html', context)
+        else:
+            return redirect('dashboard')
+
+def delete_grade_view(request, pk):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            obj = Grade.objects.filter(id=pk)
+            obj.delete()
+            return redirect('delete_grade')
+        return redirect('dashboard')
+   
