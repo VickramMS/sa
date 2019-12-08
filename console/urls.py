@@ -24,5 +24,6 @@ urlpatterns=[
     path('jobs/delete_grade/<pk>/', views.delete_grade_view, name='delete_grade_form'),
     path('jobs/delete_sub/', views.delete_sub, name='delete_sub'),
     path('jobs/delete_sub/<pk>/', views.delete_sub_view, name='delete_sub_form'),
+    path('jobs/delete_user/', views.delete_user, name='delete_user'),
     path('profile/', views.profile, name='profile'),
 ]

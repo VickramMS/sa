@@ -28,7 +28,7 @@ def assign_int(request):
     if request.user.is_staff:
         form=SubjectAssignForm(request.POST)
         if request.method == "GET":
-            dept = request.GET.get('department')
+            dept = request.GET.get('department').ti
             sem = request.GET.get('subject')
             form.fields['staff'].queryset = User.objects.filter(is_staff=True, profile__Department=dept)
             form.fields['subject'].queryset = Subject.objects.filter(sem=sem)
@@ -261,4 +261,8 @@ def delete_grade_view(request, pk):
             obj.delete()
             return redirect('delete_grade')
         return redirect('dashboard')
-   
+
+def delete_user(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return render(request, 'console/jobs/delete_user.html')
