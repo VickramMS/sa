@@ -8,7 +8,7 @@ from django.views.generic import View
 from django.utils import timezone 
 from .models import Internal, Semester, SubjectAssign, SemAssign, Subject, Grade
 from django.forms import modelformset_factory
-from .forms import SubjectAssignForm, SemAssignForm, SubjectForm, GradeForm, InternalForm
+from .forms import SubjectAssignForm, SemAssignForm, SubjectForm, GradeForm, InternalForm, SemesterForm
 from django.contrib import messages
 
 def home(request):
@@ -28,7 +28,7 @@ def assign_int(request):
     if request.user.is_staff:
         form=SubjectAssignForm(request.POST)
         if request.method == "GET":
-            dept = request.GET.get('department').ti
+            dept = request.GET.get('department')
             sem = request.GET.get('subject')
             form.fields['staff'].queryset = User.objects.filter(is_staff=True, profile__Department=dept)
             form.fields['subject'].queryset = Subject.objects.filter(sem=sem)
@@ -109,7 +109,7 @@ def semesters(request):
             if forms.is_valid():
                 forms.save()
                 return redirect('assigned_sem')
-        forms = formset(queryset=(Semester.objects.filter(subject__subcode=search, student__profile__department=request.profile.Department))) 
+        forms = formset(queryset=(Semester.objects.filter(subject__subcode=search)))
         return render(request, 'console/academics/semesters.html', {'forms':forms})
     else:
         context={
@@ -270,19 +270,37 @@ def delete_user(request):
             return render(request, 'console/jobs/delete_user.html')
 
 def enroll_internal(request):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            form = InternalForm(request.POST)
-            if request.method == "GET":
-                dept = request.GET.get('department')
-                year = request.GET.get('semester')
-                form.fields['student'].queryset = User.objects.filter(is_staff=False,is_superuser=False, profile__Department=dept)
-                form.fields['subject'].queryset = Subject.objects.filter(sem=year)
+    if request.user.is_staff:
+        form=InternalForm(request.POST)
+        if request.method == "GET":
+            dept = request.GET.get('department')
+            sub = request.GET.get('semester')
+            form.fields['student'].queryset = User.objects.filter(is_staff=False, is_superuser=False, profile__Department=dept)
+            form.fields['subject'].queryset = Subject.objects.filter(sem=sub)
+        if request.method == "POST":            
+            if form.is_valid():
+                Internal=form.save()
+                return redirect('enroll_internal')
+            else:
+                print('form not valid')
+        return render(request, 'console/academics/new_int.html',{'form':form})
+    else:
+        return redirect('dashboard')
 
-            if request.method == "POST":
-                if form.is_valid():
-                    Internal = form.save()
-                    return redirect('eroll_internal')
-            return render(request, 'console/academics/new_int.html', {'form':form})
-        else:
-            return redirect('dashboard')
+def enroll_semester(request):
+    if request.user.is_staff:
+        form=SemesterForm(request.POST)
+        if request.method == "GET":
+            dept = request.GET.get('department')
+            sub = request.GET.get('semester')
+            form.fields['student'].queryset = User.objects.filter(is_staff=False, is_superuser=False, profile__Department=dept)
+            form.fields['subject'].queryset = Subject.objects.filter(sem=sub)
+        if request.method == "POST":            
+            if form.is_valid():
+                Semester=form.save()
+                return redirect('enroll_semester')
+            else:
+                print('form not valid')
+        return render(request, 'console/academics/new_sem.html',{'form':form})
+    else:
+        return redirect('dashboard')

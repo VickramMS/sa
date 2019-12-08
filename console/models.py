@@ -17,11 +17,11 @@ class Subject(models.Model):
 class Internal(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    marks1 = models.IntegerField(default=0)
-    marks2 = models.IntegerField(default=0)
-    marks3 = models.IntegerField(default=0)
-    marks = models.IntegerField(default=100)
-    marksob = models.IntegerField(default=0)
+    marks1 = models.IntegerField(default=0, null=True, blank=True)
+    marks2 = models.IntegerField(default=0, null=True, blank=True)
+    marks3 = models.IntegerField(default=0, null=True, blank=True)
+    marks = models.IntegerField(default=100, null=True, blank=True)
+    marksob = models.IntegerField(default=0, null=True, blank=True)
 
     def save(self):
         self.marksob = (self.marks1 + self.marks2 + self.marks3)/15
@@ -41,7 +41,7 @@ class Grade(models.Model):
 
 
 class Semester(models.Model):  
-    RESULT = (('RA','Reappearance is Required'),('W','Withdrawal'),('SE','Sports Exemption'),('*Ab','Absent for Univeristy Exam'),('PASS','PASS'))  
+    RESULT = (('PASS','PASS'),('RA','Reappearance is Required'),('W','Withdrawal'),('SE','Sports Exemption'),('*Ab','Absent for Univeristy Exam'))  
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     grade = models.ForeignKey(Grade, on_delete=models.CASCADE, default=1)
