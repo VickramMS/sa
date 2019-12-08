@@ -8,7 +8,7 @@ from django.views.generic import View
 from django.utils import timezone 
 from .models import Internal, Semester, SubjectAssign, SemAssign, Subject, Grade
 from django.forms import modelformset_factory
-from .forms import SubjectAssignForm, SemAssignForm, SubjectForm, GradeForm
+from .forms import SubjectAssignForm, SemAssignForm, SubjectForm, GradeForm, InternalForm
 from django.contrib import messages
 
 def home(request):
@@ -52,7 +52,8 @@ def assigned_class(request):
 def internals(request):
     if request.user.is_staff:  
         formset = modelformset_factory(Internal, fields=('student','marks1','marks2','marks3'), extra=0)
-        search = request.GET.get('subject-query')
+        if request.method == "GET":
+            search = request.GET.get('subject-query')
         if request.method == "POST":
             forms=formset(request.POST)
             if forms.is_valid():
@@ -101,13 +102,14 @@ def assigned_sem(request):
 def semesters(request):
     if request.user.is_staff: 
         formset = modelformset_factory(Semester, fields=('student','subject','grade','result'), extra=0)
-        search = request.GET.get('subject-query')
+        if request.method == "GET":
+            search = request.GET.get('subject-query')
         if request.method == "POST":
             forms=formset(request.POST)
             if forms.is_valid():
                 forms.save()
                 return redirect('assigned_sem')
-        forms = formset(queryset=(Semester.objects.filter(subject__subcode=search))) 
+        forms = formset(queryset=(Semester.objects.filter(subject__subcode=search, student__profile__department=request.profile.Department))) 
         return render(request, 'console/academics/semesters.html', {'forms':forms})
     else:
         context={
@@ -266,3 +268,21 @@ def delete_user(request):
     if request.user.is_authenticated:
         if request.user.is_staff:
             return render(request, 'console/jobs/delete_user.html')
+
+def enroll_internal(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            form = InternalForm(request.POST)
+            if request.method == "GET":
+                dept = request.GET.get('department')
+                year = request.GET.get('semester')
+                form.fields['student'].queryset = User.objects.filter(is_staff=False,is_superuser=False, profile__Department=dept)
+                form.fields['subject'].queryset = Subject.objects.filter(sem=year)
+
+            if request.method == "POST":
+                if form.is_valid():
+                    Internal = form.save()
+                    return redirect('eroll_internal')
+            return render(request, 'console/academics/new_int.html', {'form':form})
+        else:
+            return redirect('dashboard')

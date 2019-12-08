@@ -25,5 +25,6 @@ urlpatterns=[
     path('jobs/delete_sub/', views.delete_sub, name='delete_sub'),
     path('jobs/delete_sub/<pk>/', views.delete_sub_view, name='delete_sub_form'),
     path('jobs/delete_user/', views.delete_user, name='delete_user'),
+    path('jobs/enroll_internal/', views.enroll_internal, name='enroll_internal'),
     path('profile/', views.profile, name='profile'),
 ]
