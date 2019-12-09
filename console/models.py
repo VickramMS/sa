@@ -15,8 +15,10 @@ class Subject(models.Model):
         return self.subname
 
 class Internal(models.Model):
+    DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    dept = models.CharField(max_length=5, choices=DEPT, default='MECH')
     marks1 = models.IntegerField(default=0, null=True, blank=True)
     marks2 = models.IntegerField(default=0, null=True, blank=True)
     marks3 = models.IntegerField(default=0, null=True, blank=True)
@@ -49,16 +51,18 @@ class Semester(models.Model):
     def __str__(self):
         return f'{self.student.profile.Aureg}-{self.subject.subcode}' 
 
-class SubjectAssign(models.Model):
+class IntAssign(models.Model):
+    DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))
     staff = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-
+    department = models.CharField(max_length=5, choices=DEPT, default='MECH')
     def __str__(self):
         return f'{self.staff}-{self.subject.subcode}'
 
 class SemAssign(models.Model):
+    DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))   
     staff = models.ForeignKey(User, on_delete=models.CASCADE)
     semester = models.ForeignKey(Subject, on_delete=models.CASCADE, default=1)
-
+    department = models.CharField(max_length=5, choices=DEPT, default='MECH')
     def __str__(self):
         return f'{self.staff.username}'

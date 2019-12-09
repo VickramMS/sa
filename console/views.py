@@ -6,9 +6,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.views.generic import View
 from django.utils import timezone 
-from .models import Internal, Semester, SubjectAssign, SemAssign, Subject, Grade
+from .models import Internal, Semester, IntAssign, SemAssign, Subject, Grade
 from django.forms import modelformset_factory
-from .forms import SubjectAssignForm, SemAssignForm, SubjectForm, GradeForm, InternalForm, SemesterForm
+from .forms import IntAssignForm, SemAssignForm, SubjectForm, GradeForm, InternalForm, SemesterForm
 from django.contrib import messages
 
 def home(request):
@@ -26,7 +26,7 @@ def home(request):
 
 def assign_int(request):
     if request.user.is_staff:
-        form=SubjectAssignForm(request.POST)
+        form=IntAssignForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
             sem = request.GET.get('subject')
@@ -43,7 +43,7 @@ def assign_int(request):
 def assigned_class(request):
     if request.user.is_staff:  
         context={
-            'classes': SubjectAssign.objects.filter(staff__username=request.user.username)
+            'classes': IntAssign.objects.filter(staff__username=request.user.username)
         }
         return render(request, 'console/academics/assigned_class.html', context)
     else:
@@ -54,12 +54,13 @@ def internals(request):
         formset = modelformset_factory(Internal, fields=('student','marks1','marks2','marks3'), extra=0)
         if request.method == "GET":
             search = request.GET.get('subject-query')
+            department = request.GET.get('department')
         if request.method == "POST":
             forms=formset(request.POST)
             if forms.is_valid():
                 forms.save()
                 return redirect('assigned_class')
-        forms = formset(queryset=(Internal.objects.filter(subject__subcode=search)))
+        forms = formset(queryset=(Internal.objects.filter(subject__subcode=search, dept=department)))
         return render(request, 'console/academics/internals.html',{'forms':forms})
     else:
         context={

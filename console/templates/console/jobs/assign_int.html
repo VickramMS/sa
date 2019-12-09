@@ -10,7 +10,7 @@
             </div>
             <div class="card-body">
                 <form action="{% url 'assign_int' %}" method="GET">
-                    <label for="">Department</label>
+                    <label for="">Department of Staff</label>
                     <input type="text" class="form-control" name="department">
                     <br>
                     <label for="">Semester</label>
@@ -26,6 +26,9 @@
                     <br>
                     <label for="">Subject</label>
                     {% render_field form.subject|add_class:"form-control" %}
+                    <br>
+                    <label for="">Department of Students</label>
+                    {% render_field form.department|add_class:"form-control" %}
                     <br>
                     <button type="submit" class="btn btn-primary">Assign Job</button>
                 </form>

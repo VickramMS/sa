@@ -1,17 +1,17 @@
 from django import forms
-from .models import SubjectAssign, SemAssign
+from .models import IntAssign, SemAssign
 from django.contrib.auth.models import User
 from .models import Subject, Grade, Internal, Semester
 
-class SubjectAssignForm(forms.ModelForm):
+class IntAssignForm(forms.ModelForm):
     class Meta:
-        model = SubjectAssign
-        fields = ['staff','subject']
+        model = IntAssign
+        fields = ['staff','subject', 'department']
 
 class SemAssignForm(forms.ModelForm):
     class Meta:
         model = SemAssign
-        fields = ['staff','semester']
+        fields = ['staff','semester', 'department']
 
 class SubjectForm(forms.ModelForm):
     class Meta:
