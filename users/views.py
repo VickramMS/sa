@@ -56,8 +56,3 @@ def del_staff_view(request, pk):
             obj.delete()
             return redirect('delete_staff')
         return redirect('dashboard')
-
-def edit_user(request):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            return render(request, 'console/jobs/edit_user.html')

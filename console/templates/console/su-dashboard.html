@@ -45,25 +45,6 @@
             </div>
         </a>
     </div>
-    <div class="col-xl-4 col-md-6 mb-4">
-        <a href="{% url 'add_staff' %}" style="text-decoration: none;">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">New Staff Record
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Add Staff Record</div>
-                            <span class="text-xs">Add new staff record</span>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-user-plus fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
 </div>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -148,14 +129,14 @@
         </a>
     </div>
     <div class="col-xl-3 col-md-6 mb-4">
-        <a href="" style="text-decoration: none;">
+        <a href="{% url 'finish_int' %}" style="text-decoration: none;">
             <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Edit Record</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Edit Enroll - IN</div>
-                            <span class="text-xs">Edit an Internal Mark Record</span>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Finish Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Finalise Internals</div>
+                            <span class="text-xs">Internal Mark Record</span>
                         </div>
                     </div>
                 </div>
@@ -178,14 +159,14 @@
         </a>
     </div>
     <div class="col-xl-3 col-md-6 mb-4">
-        <a href="" style="text-decoration: none;">
+        <a href="{% url 'finish_sem' %}" style="text-decoration: none;">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Edit Record</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Edit Enroll - SEM</div>
-                            <span class="text-xs">Edit a Semester Record </span>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Finish Record</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Finalise Semesters</div>
+                            <span class="text-xs">Semester Mark Record </span>
                         </div>
                     </div>
                 </div>
@@ -195,7 +176,7 @@
 </div>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Student Records</h1>
+    <h1 class="h3 mb-0 text-gray-800">User Records</h1>
 </div>
 
 <div class="row">
@@ -219,17 +200,18 @@
         </a>
     </div>
     <div class="col-xl-4 col-md-6 mb-4">
-        <a href="{% url 'edit_user' %}" style="text-decoration: none;">
-            <div class="card border-left-warning shadow h-100 py-2">
+        <a href="{% url 'add_staff' %}" style="text-decoration: none;">
+            <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Edit Record</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Student / Staff</div>
-                            <span class="text-xs">Edit a record of a Student / Staff</span>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">New Staff Record
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Add Staff Record</div>
+                            <span class="text-xs">Add new staff record</span>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                            <i class="fas fa-user-plus fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>

@@ -31,7 +31,7 @@ class Internal(models.Model):
 
 
     def __str__(self):
-        return f'{self.student.profile.Aureg}-SEM.{self.subject.sem}'
+        return f'{self.student}-SEM.{self.subject.sem}'
 
 
 class Grade(models.Model):
@@ -44,12 +44,14 @@ class Grade(models.Model):
 
 class Semester(models.Model):  
     RESULT = (('PASS','PASS'),('RA','Reappearance is Required'),('W','Withdrawal'),('SE','Sports Exemption'),('*Ab','Absent for Univeristy Exam'))  
+    DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     grade = models.ForeignKey(Grade, on_delete=models.CASCADE, default=1)
+    dept = models.CharField(max_length=5, choices=DEPT, default='MECH')
     result = models.CharField(max_length=30, choices=RESULT, default='PASS')
     def __str__(self):
-        return f'{self.student.profile.Aureg}-{self.subject.subcode}' 
+        return f'{self.student}-{self.subject.subcode}' 
 
 class IntAssign(models.Model):
     DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))

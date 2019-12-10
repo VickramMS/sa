@@ -40,7 +40,7 @@ def assign_int(request):
     else:
         return redirect('dashboard')
 
-def assigned_class(request):
+def assigned_int(request):
     if request.user.is_staff:  
         context={
             'classes': IntAssign.objects.filter(staff__username=request.user.username)
@@ -305,3 +305,57 @@ def enroll_semester(request):
         return render(request, 'console/academics/new_sem.html',{'form':form})
     else:
         return redirect('dashboard')
+
+def finish_int(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            context={
+            'classes': IntAssign.objects.filter(staff__username=request.user.username)
+            }
+            return render(request, 'console/academics/finish_int.html', context)
+
+def delete_int(request, id, id2):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            context={
+            'objs': Internal.objects.filter(subject__subcode=id, dept=id2),
+            'id':id,
+            'id2':id2,
+            }
+            return render(request, 'console/academics/finish_int_del.html', context)
+
+def delete_internal(request, id, id2):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            obj = IntAssign.objects.filter(subject__subcode=id, department=id2)
+            obj.delete()
+            return redirect('finish_int')
+        else:
+            return redirect('dashboard')
+
+def finish_sem(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            context={
+            'semesters': SemAssign.objects.filter(staff__username=request.user.username)
+            }
+            return render(request, 'console/academics/finish_sem.html', context)
+
+def delete_sem(request, id, id2):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            context={
+            'objs': Semester.objects.filter(subject__subcode=id, dept=id2),
+            'id':id,
+            'id2':id2,
+            }
+            return render(request, 'console/academics/finish_sem_del.html', context)
+
+def delete_semester(request, id, id2):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            obj = SemAssign.objects.filter(semester__subcode=id, department=id2)
+            obj.delete()
+            return redirect('finish_sem')
+        else:
+            return redirect('dashboard')

@@ -31,6 +31,5 @@ urlpatterns = [
     path('jobs/delete_stu/<pk>/', user_views.del_stu_view, name='delete_stu_form'),
     path('jobs/delete_staff/', user_views.del_staff, name='delete_staff'),
     path('jobs/delete_staff/<pk>/', user_views.del_staff_view, name='delete_staff_form'),
-    path('jobs/edit_user/', user_views.edit_user, name='edit_user'),
 
 ]

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+{% load widget_tweaks %}
+<br>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Records Assigned</h1>
+    <a href="{% url 'finish_int' %}{{id}}/{{id2}}/delete/"
+        class="btn btn-outline-success">Complete Portal Update</a>
+</div>
+<div class="row">
+{% for obj in objs %}
+<div class="col-xl-3 col-md-6 mb-4">
+    <a style="text-decoration: none;">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{obj.subject.subname}}
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{obj.student}}
+                        </div>
+                        <span class="text-s">I1 - {{obj.marks1}}, I2 - {{obj.marks2}}, I3 - {{obj.marks3}}</span>
+                    </div>
+                    <div class="col-auto">
+                        <h2>{{obj.marksob}}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+{% endfor %}
+</div>
+
+{% endblock content %}
