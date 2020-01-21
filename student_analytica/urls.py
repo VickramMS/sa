@@ -23,7 +23,8 @@ from console.views import views as console_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('console.urls.urls')),
-    path('', include('console.urls.subject')),
+    path('subject/', include('console.urls.subject')),
+    path('grade/', include('console.urls.grade')),
     path('login/',console_views.Login.as_view(),name='login'),
     path('logout/',console_views.LogoutView.as_view(),name='logout'),
     path('jobs/add_student/', user_views.add_student, name='add_student'),

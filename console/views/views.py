@@ -160,59 +160,6 @@ class LogoutView(View,LoginRequiredMixin):
         response.delete_cookie('role')
         return response
 
-def add_grade(request):
-    if request.user.is_staff:
-        form=GradeForm(request.POST)
-        if form.is_valid():
-            Grade=form.save()
-            return redirect('add_grade')
-        return render(request, 'console/jobs/add_grade.html',{'form':form})
-    else:
-        return redirect('dashboard')
-
-def edit_grade(request):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            context={
-                'grades': Grade.objects.all()
-            }
-            return render(request, 'console/jobs/edit_grade.html', context)
-        else:
-            return redirect('dashboard')
-
-    
-def edit_grade_view(request, pk):
-    if request.user.is_staff:
-        obj = get_object_or_404(Grade, id=pk)
-        form = GradeForm(request.POST or None, instance=obj)
-        context = {'form':form}
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.save()
-            context = {'form':form}
-            return redirect('edit_grade_form')
-        return render(request, 'console/jobs/edit_grade_form.html', context)
-    else:
-        return redirect('edit_grade')
-
-def delete_grade(request):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            context={
-                'grades': Grade.objects.all()
-            }
-            return render(request, 'console/jobs/delete_grade.html', context)
-        else:
-            return redirect('dashboard')
-
-def delete_grade_view(request, pk):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            obj = Grade.objects.filter(id=pk)
-            obj.delete()
-            return redirect('delete_grade')
-        return redirect('dashboard')
-
 def delete_user(request):
     if request.user.is_authenticated:
         if request.user.is_staff:
