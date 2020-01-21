@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users',
+    'users.apps.UsersConfig',
     'console.apps.ConsoleConfig',
     'crispy_forms',
     'widget_tweaks',

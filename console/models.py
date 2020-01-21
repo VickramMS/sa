@@ -19,17 +19,14 @@ class Internal(models.Model):
     student = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     subject = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
     dept = models.CharField(max_length=5, choices=DEPT, default='MECH')
-    marks1 = models.IntegerField(default=0)
-    marks2 = models.IntegerField(default=0)
-    marks3 = models.IntegerField(default=0)
-    marks = models.IntegerField(default=100)
-    marksob = models.IntegerField(default=0)
-
+    marks1 = models.IntegerField(default=0, null=True)
+    marks2 = models.IntegerField(default=0, null=True)
+    marks3 = models.IntegerField(default=0, null=True)
+    marks = models.IntegerField(default=100, null=True)
+    marksob = models.IntegerField(default=0, null=True)
     def save(self):
-        self.marksob = (self.marks1 + self.marks2 + self.marks3)/15
+        self.marksob = (int(self.marks1) + int(self.marks2) + int(self.marks3))/15
         return super(Internal, self).save()
-
-
     def __str__(self):
         return f'{self.student}-SEM.{self.subject.sem}'
 

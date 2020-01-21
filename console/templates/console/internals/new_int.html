@@ -2,6 +2,12 @@
 {% block content %}
 {% load widget_tweaks %}
 
+<style>
+.hidden{
+    display: none
+}
+</style>
+
 <div class="row">
     <div class="col-lg-6 mb-4" style="margin: auto">
         <div class="card shadow mb-4">
@@ -27,7 +33,14 @@
                     <label for="">Subject</label>
                     {% render_field form.subject|add_class:"form-control" %}
                     <br>
-                    <button type="submit" class="btn btn-primary">Enroll</button>
+                    {% render_field form.dept|add_class:"form-control" %}
+                    {% render_field form.marks1|add_class:"hidden" value=0 %}
+                    {% render_field form.marks2|add_class:"hidden" value=0 %}
+                    {% render_field form.marks2|add_class:"hidden" value=0 %}
+                    {% render_field form.marks3|add_class:"hidden" value=0 %}
+                    {% render_field form.marks|add_class:"hidden" value=100 %}
+                    {% render_field form.marksob|add_class:"hidden" value=0 %}
+                    <button type="submit" class="btn btn-primary" >Enroll</button>
                 </form>
             </div>
         </div>
