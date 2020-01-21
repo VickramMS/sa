@@ -7,7 +7,7 @@
 <div class="row">
     {% for class in classes %}
     <div class="col-xl-4 col-md-6 mb-4">
-        <a href="{% url 'finish_int' %}{{class.subject.subcode}}/{{class.department}}/" style="text-decoration: none;">
+        <a href="{% url 'delete_int' id=class.subject.subcode id2=class.department %}" style="text-decoration: none;">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">

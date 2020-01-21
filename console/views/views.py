@@ -6,9 +6,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.views.generic import View
 from django.utils import timezone 
-from .models import Internal, Semester, IntAssign, SemAssign, Subject, Grade
+from console.models import Internal, Semester, IntAssign, SemAssign, Subject, Grade
 from django.forms import modelformset_factory
-from .forms import IntAssignForm, SemAssignForm, SubjectForm, GradeForm, InternalForm, SemesterForm
+from console.forms import IntAssignForm, SemAssignForm, SubjectForm, GradeForm, InternalForm, SemesterForm
 from django.contrib import messages
 
 def home(request):
@@ -160,58 +160,6 @@ class LogoutView(View,LoginRequiredMixin):
         response.delete_cookie('role')
         return response
 
-def add_subject(request):
-    if request.user.is_staff:
-        form=SubjectForm(request.POST)
-        if form.is_valid():
-            Subject=form.save()
-            return redirect('add_subject')
-        return render(request, 'console/jobs/add_subject.html',{'form':form})
-    else:
-        return redirect('dashboard')
-
-def edit_sub(request):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            context={
-                'subjects': Subject.objects.all()
-            }
-            return render(request, 'console/jobs/edit_sub.html', context)
-        else:
-            return redirect('dashboard')
-
-def edit_sub_view(request, pk):
-    if request.user.is_staff:
-        obj = get_object_or_404(Subject, id=pk)
-        form = SubjectForm(request.POST or None, instance=obj)
-        context = {'form':form}
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.save()
-            context = {'form':form}
-            return redirect('edit_sub_form')
-        return render(request, 'console/jobs/edit_sub_form.html', context)
-    else:
-        return redirect('edit_sub')
-
-def delete_sub(request):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            context={
-                'subjects': Subject.objects.all()
-            }
-            return render(request, 'console/jobs/delete_sub.html', context)
-        else:
-            return redirect('dashboard')
-
-def delete_sub_view(request, pk):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            obj = Subject.objects.filter(id=pk)
-            obj.delete()
-            return redirect('delete_sub')
-        return redirect('dashboard')
-   
 def add_grade(request):
     if request.user.is_staff:
         form=GradeForm(request.POST)
@@ -280,7 +228,8 @@ def enroll_internal(request):
             form.fields['subject'].queryset = Subject.objects.filter(sem=sub)
         if request.method == "POST":            
             if form.is_valid():
-                Internal=form.save()
+                form.save()
+                messages.success(request, 'A new internal record has been updated!')
                 return redirect('enroll_internal')
             else:
                 print('form not valid')

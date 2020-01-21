@@ -180,6 +180,13 @@
           </ul>
         </nav>
         <div class="container-fluid">
+            {% for message in messages %}
+            {% if message.tags == 'error' %}
+            <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% else %}
+            <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
             {% block content %}
             {% endblock content %}
         </div>
@@ -218,6 +225,13 @@
   <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
   <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
 
+  <script>
+  window.setTimeout(function () {
+      $(".alert").fadeTo(500, 0).slideUp(500, function () {
+        $(this).remove();
+      });
+    }, 4000);
+</script>
 </body>
 
 </html>

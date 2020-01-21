@@ -16,14 +16,14 @@ class Subject(models.Model):
 
 class Internal(models.Model):
     DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    subject = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
     dept = models.CharField(max_length=5, choices=DEPT, default='MECH')
-    marks1 = models.IntegerField(default=0, null=True, blank=True)
-    marks2 = models.IntegerField(default=0, null=True, blank=True)
-    marks3 = models.IntegerField(default=0, null=True, blank=True)
-    marks = models.IntegerField(default=100, null=True, blank=True)
-    marksob = models.IntegerField(default=0, null=True, blank=True)
+    marks1 = models.IntegerField(default=0)
+    marks2 = models.IntegerField(default=0)
+    marks3 = models.IntegerField(default=0)
+    marks = models.IntegerField(default=100)
+    marksob = models.IntegerField(default=0)
 
     def save(self):
         self.marksob = (self.marks1 + self.marks2 + self.marks3)/15
@@ -45,9 +45,9 @@ class Grade(models.Model):
 class Semester(models.Model):  
     RESULT = (('PASS','PASS'),('RA','Reappearance is Required'),('W','Withdrawal'),('SE','Sports Exemption'),('*Ab','Absent for Univeristy Exam'))  
     DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    grade = models.ForeignKey(Grade, on_delete=models.CASCADE, default=1)
+    student = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    subject = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
+    grade = models.ForeignKey(Grade, on_delete=models.DO_NOTHING, default=1)
     dept = models.CharField(max_length=5, choices=DEPT, default='MECH')
     result = models.CharField(max_length=30, choices=RESULT, default='PASS')
     def __str__(self):
@@ -55,16 +55,17 @@ class Semester(models.Model):
 
 class IntAssign(models.Model):
     DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))
-    staff = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    staff = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    subject = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
     department = models.CharField(max_length=5, choices=DEPT, default='MECH')
     def __str__(self):
         return f'{self.staff}-{self.subject.subcode}'
 
 class SemAssign(models.Model):
     DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))   
-    staff = models.ForeignKey(User, on_delete=models.CASCADE)
-    semester = models.ForeignKey(Subject, on_delete=models.CASCADE, default=1)
+    staff = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    semester = models.ForeignKey(Subject, on_delete=models.DO_NOTHING, default=1)
     department = models.CharField(max_length=5, choices=DEPT, default='MECH')
     def __str__(self):
         return f'{self.staff.username}'
+
