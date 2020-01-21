@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'console.apps.ConsoleConfig',
-    'users.apps.UsersConfig',
     'crispy_forms',
     'widget_tweaks',
     'django.contrib.admin',

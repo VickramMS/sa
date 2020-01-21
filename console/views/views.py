@@ -6,9 +6,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.views.generic import View
 from django.utils import timezone 
-from console.models import Internal, Semester, IntAssign, SemAssign, Subject, Grade
+from console.models import Internal, Semester, IntAssign, SemAssign, Grade
 from django.forms import modelformset_factory
-from console.forms import IntAssignForm, SemAssignForm, SubjectForm, GradeForm, InternalForm, SemesterForm
+from console.forms import IntAssignForm, SemAssignForm, InternalForm, SemesterForm
 from django.contrib import messages
 
 def home(request):
@@ -133,37 +133,6 @@ def profile(request):
         return render(request, 'student/profile.html',)
 
 
-class Login(View):
-    template_name="console/home.html"
-    def get(self,request):
-        return render(request,self.template_name)
-    def post(self,request):
-        try:
-            user =User.objects.get(email=request.POST.get('email'))            
-        except:
-            return render(request, self.template_name,{'error':True})   
-        else:
-            user = authenticate(request,username=user.username,password=request.POST.get('password'))
-            if user is None:
-                return render(request,self.template_name,{'error':True})
-            login(request,user)
-            response= redirect('dashboard')
-            response.set_cookie('role','user')
-            return response
-        return render(request,self.template_name)
-
-
-class LogoutView(View,LoginRequiredMixin):
-    def get(self,request):  
-        logout(request)
-        response=redirect('home')
-        response.delete_cookie('role')
-        return response
-
-def delete_user(request):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            return render(request, 'console/jobs/delete_user.html')
 
 def enroll_internal(request):
     if request.user.is_staff:

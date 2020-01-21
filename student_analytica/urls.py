@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from users import views as user_views
-from console.views import views as console_views
 
 
 urlpatterns = [
@@ -25,13 +24,7 @@ urlpatterns = [
     path('', include('console.urls.urls')),
     path('subject/', include('console.urls.subject')),
     path('grade/', include('console.urls.grade')),
-    path('login/',console_views.Login.as_view(),name='login'),
-    path('logout/',console_views.LogoutView.as_view(),name='logout'),
-    path('jobs/add_student/', user_views.add_student, name='add_student'),
-    path('jobs/add_staff/', user_views.add_staff, name='add_staff'),
-    path('jobs/delete_stu/', user_views.del_stu, name='delete_stu'),
-    path('jobs/delete_stu/<pk>/', user_views.del_stu_view, name='delete_stu_form'),
-    path('jobs/delete_staff/', user_views.del_staff, name='delete_staff'),
-    path('jobs/delete_staff/<pk>/', user_views.del_staff_view, name='delete_staff_form'),
-
+    path('user/', include('users.urls')),
+    path('login/', user_views.Login.as_view(),name='login'),
+    path('logout/', user_views.LogoutView.as_view(),name='logout'),
 ]
