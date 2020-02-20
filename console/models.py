@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import User
 
 
 
@@ -24,9 +24,11 @@ class Internal(models.Model):
     marks3 = models.IntegerField(default=0, null=True)
     marks = models.IntegerField(default=100, null=True)
     marksob = models.IntegerField(default=0, null=True)
+
     def save(self):
         self.marksob = (int(self.marks1) + int(self.marks2) + int(self.marks3))/15
         return super(Internal, self).save()
+        
     def __str__(self):
         return f'{self.student}-SEM.{self.subject.sem}'
 

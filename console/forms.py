@@ -1,6 +1,6 @@
 from django import forms
 from .models import IntAssign, SemAssign
-from django.contrib.auth.models import User
+from users.models import User
 from .models import Subject, Grade, Internal, Semester
 
 class IntAssignForm(forms.ModelForm):

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from console.models import Semester, SemAssign, Subject
 from console.forms import SemesterForm, SemAssignForm
-from django.contrib.auth.models import User
+from users.models import User
 from django.forms import modelformset_factory
+from django.contrib import messages
 
 def assign_sem(request):
     if request.user.is_staff:

@@ -1,12 +1,63 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone 
+from django.contrib.auth.models import AbstractUser
+from datetime import date
+from . import choices as c
+
+class User(AbstractUser):
+    user_type = models.CharField(max_length=20, choices=c.USER_TYPE)
+    department = models.CharField(max_length=20, choices=c.DEPT)
+    email = models.EmailField()
+    date_of_birth = models.DateField(null=True)
+    age = models.IntegerField(blank=True)
+    
+
+    def save(self, *args, **kwargs):
+        #date calculator
+        today = date.today()
+        born = self.date_of_birth
+        age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
+        #save 
+        self.age = age
+        return super().save(*args, **kwargs)
+
+class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    year = models.CharField(max_length=30, choices=c.YEAR)
+
+    def save(self, *args, **kwargs):
+        #year calculator
+        today = date.today()
+        start = self.user.date_joined
+        num = today.year - start.year - ((today.month, today.day) < (start.month, start.day))
+        print(num)
+        #save
+        if num == 0:
+            self.year = 'First Year'
+        elif num == 1:
+            self.year = 'Second Year'
+        elif num == 2:
+            self.year = 'Third Year'
+        elif num == 3:
+            self.year = 'Fourth Year'
+        else:
+            self.year = 'Completed'
+
+        return super().save(*args, **kwargs)    
+
+    def __str__(self):
+        return(self.user.username)
+
+class Staff(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return(self.user.username)
 
 
+
+"""
 class Profile(models.Model):
-    GEN = (('male','Male'),('female','Female'),('trans','Transgender'))
-    STATE = (('KA', 'Karnataka'), ('AP', 'Andhra Pradesh'), ('KL', 'Kerala'), ('TN', 'Tamil Nadu'), ('MH', 'Maharashtra'), ('UP', 'Uttar Pradesh'), ('GA', 'Goa'), ('GJ', 'Gujarat'), ('RJ', 'Rajasthan'), ('HP', 'Himachal Pradesh'), ('JK', 'Jammu and Kashmir'), ('TG', 'Telangana'), ('AR', 'Arunachal Pradesh'), ('AS', 'Assam'), ('BR', 'Bihar'), ('CG', 'Chattisgarh'), ('HR', 'Haryana'), ('JH', 'Jharkhand'), ('MP', 'Madhya Pradesh'), ('MN', 'Manipur'), ('ML', 'Meghalaya'), ('MZ', 'Mizoram'), ('NL', 'Nagaland'), ('OR', 'Orissa'), ('PB', 'Punjab'), ('SK', 'Sikkim'), ('TR', 'Tripura'), ('UA', 'Uttarakhand'), ('WB', 'West Bengal'), ('AN', 'Andaman and Nicobar'), ('CH', 'Chandigarh'), ('DN', 'Dadra and Nagar Haveli'), ('DD', 'Daman and Diu'), ('DL', 'Delhi'), ('LD', 'Lakshadweep'), ('PY', 'Pondicherry'))
-    DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))
     HSTL = (('DS','Day Scholar'), ('HSTL', 'Hostel'), ('PG', 'Paying Guest'))
     TRANS = (('SW','Self Walk'), ('SV','Self Vehicle'), ('PT','Public Transport'))
     YEAR = (('FY','First Year'),('SY','Second Year'),('TY','Third Year'),('LY','Fourth Year'))
@@ -52,19 +103,4 @@ class Profile(models.Model):
     BloodGroup = models.CharField(max_length=6, choices=BLOOD, blank=True,help_text='Blood Group')
     def __str__(self):
         return f'{self.user.username}' 
-
-
-
-
-
- 
-
-
-
-    
-    
-
-
-
-
-
+"""
