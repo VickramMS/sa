@@ -68,3 +68,26 @@ GENDER = (
         ('Transgender','Transgender')
     )
 
+RES = (
+        ('Days Scholar','Day Scholar'), 
+        ('Hostel', 'Hostel'), 
+        ('OTHER', 'Other')
+    )
+
+TRANS = (
+        ('Self Walk','Self Walk'),    
+        ('Self Vehicle','Self Vehicle'), 
+        ('Public Transport','Public Transport')
+    )
+
+BLOOD = (
+        ('A +ve','A +ve'), 
+        ('A -ve','A -ve'), 
+        ('B +ve','B +ve'), 
+        ('B -ve','B -ve'), 
+        ('O +ve','O +ve'), 
+        ('O -ve','O -ve'), 
+        ('AB +ve','AB +ve'), 
+        ('AB -ve','AB -ve'),
+        ('Other','Other')
+    )
