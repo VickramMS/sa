@@ -7,32 +7,33 @@ from django.contrib import messages
 
 
 def assign_int(request):
-    if request.user.is_staff:
+    if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
         form=IntAssignForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
             sem = request.GET.get('subject')
-            form.fields['staff'].queryset = User.objects.filter(is_staff=True, profile__Department=dept)
+            form.fields['staff'].queryset = User.objects.filter(user_type="STAFF" or "HOD", department=dept)
             form.fields['subject'].queryset = Subject.objects.filter(sem=sem)
         if request.method == "POST":            
             if form.is_valid():
                 form.save()
+                messages.success(request, 'Internal job has been assigned!')
                 return redirect('assign_int')
         return render(request, 'console/internals/assign_int.html',{'form':form})
     else:
         return redirect('dashboard')
 
 def assigned_int(request):
-    if request.user.is_staff:  
+    if request.user.user_type == "STAFF" or request.user.user_type == "HOD":  
         context={
             'classes': IntAssign.objects.filter(staff__username=request.user.username)
-        }
+        } 
         return render(request, 'console/internals/assigned_class.html', context)
-    else:
+    elif request.user.user_type == "STUDENT" or request.user.user_type == "REPRESENTATIVE":
         return redirect('internals')
 
 def internals(request):
-    if request.user.is_staff:  
+    if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
         formset = modelformset_factory(Internal, fields=('student','marks1','marks2','marks3'), extra=0)
         if request.method == "GET":
             search = request.GET.get('subject-query')
@@ -44,7 +45,8 @@ def internals(request):
                 return redirect('assigned_class')
         forms = formset(queryset=(Internal.objects.filter(subject__subcode=search, dept=department)))
         return render(request, 'console/internals/internals.html',{'forms':forms})
-    else:
+    elif request.user.user_type == "STUDENT" or request.user.user_type == "REPRESENTATIVE":
+        print("rtue") 
         context={
             'internals1': Internal.objects.filter(student__username=request.user.username).filter(subject__sem=1),
             'internals2': Internal.objects.filter(student__username=request.user.username).filter(subject__sem=2),
@@ -55,15 +57,15 @@ def internals(request):
             'internals7': Internal.objects.filter(student__username=request.user.username).filter(subject__sem=7),
             'internals8': Internal.objects.filter(student__username=request.user.username).filter(subject__sem=8),
         }
-        return render(request, 'student/internals/internals.html',context)
+        return render(request, 'student/academics/internals.html',context)
 
 def enroll_internal(request):
-    if request.user.is_staff:
+    if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
         form=InternalForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
             sub = request.GET.get('semester')
-            form.fields['student'].queryset = User.objects.filter(is_staff=False, is_superuser=False, profile__Department=dept)
+            form.fields['student'].queryset = User.objects.filter(user_type="STUDENT" or "REPRESENTATIVE", department=dept)
             form.fields['subject'].queryset = Subject.objects.filter(sem=sub)
         if request.method == "POST":            
             if form.is_valid():
@@ -73,13 +75,13 @@ def enroll_internal(request):
             else:
                 print('form not valid')
         return render(request, 'console/internals/new_int.html',{'form':form})
-    else:
+    elif request.user.user_type == "STUDENT" or request.user.user_type == "REPRESENTATIVE":
         return redirect('dashboard')
 
 
 def finish_int(request):
     if request.user.is_authenticated:
-        if request.user.is_staff:
+        if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
             context={
             'classes': IntAssign.objects.filter(staff__username=request.user.username)
             }
@@ -87,7 +89,7 @@ def finish_int(request):
 
 def delete_int(request, id, id2):
     if request.user.is_authenticated:
-        if request.user.is_staff:
+        if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
             context={
             'objs': Internal.objects.filter(subject__subcode=id, dept=id2),
             'id':id,
@@ -97,7 +99,7 @@ def delete_int(request, id, id2):
 
 def delete_internal(request, id, id2):
     if request.user.is_authenticated:
-        if request.user.is_staff:
+        if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
             obj = IntAssign.objects.filter(subject__subcode=id, department=id2)
             obj.delete()
             return redirect('finish_int')

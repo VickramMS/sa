@@ -11,10 +11,21 @@
             <div class="card-body">
                 <form action="{% url 'assign_int' %}" method="GET">
                     <label for="">Department of Staff</label>
-                    <input type="text" class="form-control" name="department">
+                    <select type="text" class="form-control" name="department">
+                        <option value="MECH">Mechanical</option>
+                        <option value="CIVIL">Civil</option>
+                        <option value="ECE">Electronics and Communications</option>
+                        <option value="EEE">Electricals and Electronics</option>
+                        <option value="CSE">Computer Science</option>
+                        <option values="OTHERS">Others</option>
+                    </select>
                     <br>
                     <label for="">Semester</label>
-                    <input type="text" class="form-control" name="subject">
+                    <select type="text" class="form-control" name="subject">
+                        {% for i in '12345678'|make_list %}
+                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                        {% endfor %}
+                    </select>
                     <br>
                     <button type="submit" class="btn btn-primary">Filter</button>
                 </form>
@@ -22,13 +33,13 @@
                 <form action="{% url 'assign_int' %}" method="POST">
                     {% csrf_token %}
                     <label for="">Staff Name</label>
-                    {% render_field form.staff|add_class:"form-control" %}
+                    {% render_field form.staff class="form-control" %}
                     <br>
                     <label for="">Subject</label>
-                    {% render_field form.subject|add_class:"form-control" %}
+                    {% render_field form.subject class="form-control" %}
                     <br>
                     <label for="">Department of Students</label>
-                    {% render_field form.department|add_class:"form-control" %}
+                    {% render_field form.department class="form-control" %}
                     <br>
                     <button type="submit" class="btn btn-primary">Assign Job</button>
                 </form>

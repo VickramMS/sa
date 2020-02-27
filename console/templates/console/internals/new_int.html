@@ -17,7 +17,13 @@
             <div class="card-body">
                 <form action="{% url 'enroll_internal' %}" method="GET">
                     <label for="">Department</label>
-                    <input type="text" class="form-control" name="department">
+                    <select type="text" class="form-control" name="department">
+                        <option value="MECH">Mechanical</option>
+                        <option value="CIVIL">Civil</option>
+                        <option value="ECE">Electronics and Communications</option>
+                        <option value="EEE">Electricals and Electronics</option>
+                        <option value="CSE">Computer Science</option>
+                    </select>
                     <br>
                     <label for="">Semester</label>
                     <input type="text" class="form-control" name="semester">
@@ -27,19 +33,12 @@
                 <hr>
                 <form action="{% url 'enroll_internal' %}" method="POST">
                     {% csrf_token %}
-                    <label for="">Student Name</label>
-                    {% render_field form.student|add_class:"form-control" %}
-                    <br>
+                    <label for="">Student</label>
+                    {% render_field form.student class="form-control"%} <br>
                     <label for="">Subject</label>
-                    {% render_field form.subject|add_class:"form-control" %}
-                    <br>
-                    {% render_field form.dept|add_class:"form-control" %}
-                    {% render_field form.marks1|add_class:"hidden" value=0 %}
-                    {% render_field form.marks2|add_class:"hidden" value=0 %}
-                    {% render_field form.marks2|add_class:"hidden" value=0 %}
-                    {% render_field form.marks3|add_class:"hidden" value=0 %}
-                    {% render_field form.marks|add_class:"hidden" value=100 %}
-                    {% render_field form.marksob|add_class:"hidden" value=0 %}
+                    {% render_field form.subject class="form-control" %} <br>
+                    <label for="">Department</label>
+                    {% render_field form.dept class="hidden" %} <br>
                     <button type="submit" class="btn btn-primary" >Enroll</button>
                 </form>
             </div>

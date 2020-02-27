@@ -7,18 +7,19 @@ class User(AbstractUser):
     user_type = models.CharField(max_length=20, choices=c.USER_TYPE)
     department = models.CharField(max_length=20, choices=c.DEPT)
     email = models.EmailField()
-    date_of_birth = models.DateField(null=True)
-    age = models.IntegerField(blank=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    age = models.IntegerField(blank=True, null=True)
     
+
 
     def save(self, *args, **kwargs):
         #date calculator
         today = date.today()
         born = self.date_of_birth
-        age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-
-        #save 
-        self.age = age
+        #save
+        if type(self.date_of_birth) == 'NoneType':
+            age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+            self.age = age
         return super().save(*args, **kwargs)
 
 class Student(models.Model):
@@ -51,7 +52,7 @@ class Student(models.Model):
         today = date.today()
         start = self.user.date_joined
         num = today.year - start.year - ((today.month, today.day) < (start.month, start.day))
-        print(num)
+
         #save
         if num == 0:
             self.year = 'First Year'

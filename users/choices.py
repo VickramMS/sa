@@ -6,12 +6,12 @@ USER_TYPE = (('ADMIN','ADMIN'),('HOD','HOD'),('STAFF','STAFF'),('REPRESENTATIVE'
 
 #ACADEMICS
 DEPT = (
-        ('MECH','Mechanical'), 
-        ('CIVIL','Civil'), 
-        ('EEE','Electrical and Electronics'), 
-        ('ECE','Electronics and Communication'), 
-        ('CSE','Computer Science and Engineering'),
-        ('OTHER','Others')
+        ('MECH','MECH'), 
+        ('CIVIL','CIVIL'), 
+        ('EEE','EEE'), 
+        ('ECE','ECE'), 
+        ('CSE','CSE'),
+        ('OTHER','OTHERS')
     )
 
 YEAR = (
@@ -91,3 +91,33 @@ BLOOD = (
         ('AB -ve','AB -ve'),
         ('Other','Other')
     )
+
+RESULT = (
+        ('PASS', 'PASS'),
+        ('RA', 'Reappearance is Required'),
+        ('W', 'Withdrawal'),
+        ('SE', 'Sports Exemption'),
+        ('*Ab', 'Absent for Univeristy Exam')
+    
+    )
+
+CRED = (
+        ('1','1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+        ('6', '6'),
+    )
+
+SEM = (
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+        ('6', '6'),
+        ('7', '7'),
+        ('8', '8')
+    )
+

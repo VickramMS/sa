@@ -36,25 +36,35 @@ class LogoutView(View,LoginRequiredMixin):
 
 def add_student(request):
     if request.method == 'POST':
-        form = AddStudentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'New student has been added!')
-            return redirect('add_student')
-    else:
-        form = AddStudentForm()
-    return render(request, 'console/users/add_student.html', {'form': form})
+        user = User()
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.user_type = request.POST.get('user-type')
+        user.department = request.POST.get('department')
+        user.date_of_birth = request.POST.get('date-of-birth')
+        dob = user.date_of_birth
+        year = str(dob)[0:4]
+        month = str(dob)[5:7]
+        date = str(dob)[8:10]
+        user.set_password(str(date+'-'+month+'-'+year))
+        user.save()
+        messages.success(request, 'A new student has been created!')
+        return redirect('add_student')
+    return render(request, 'console/users/add_student.html')
 
 def add_staff(request):
     if request.method == 'POST':
-        form = AddStaffForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'New staff has been added!')
-            return redirect('add_staff')
-    else:
-        form = AddStaffForm()
-    return render(request, 'console/users/add_staff.html', {'form': form})
+        user = User()
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.user_type = request.POST.get('user-type')
+        user.department = request.POST.get('department')
+        user.password = request.POST.get('password')
+        user.set_password(str(user.password))
+        user.save()
+        messages.success(request, 'A new student has been created!')
+        return redirect('add_staff')
+    return render(request, 'console/users/add_staff.html')
 
 
 def del_stu(request):

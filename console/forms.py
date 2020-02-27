@@ -27,7 +27,6 @@ class InternalForm(forms.ModelForm):
     class Meta:
         model = Internal
         fields = '__all__'
-
 class SemesterForm(forms.ModelForm):
     class Meta:
         model = Semester

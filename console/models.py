@@ -1,32 +1,31 @@
 from django.db import models
 from users.models import User
+from users import choices as c
 
 
 
 class Subject(models.Model):
-    CRED = (('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'))
-    SEM = (('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8'))
     subname = models.CharField(max_length=100)
     subcode = models.CharField(max_length=7, unique=True)
-    subcred = models.CharField(max_length=1, choices=CRED, default='1')
-    sem = models.CharField(max_length=1, choices=SEM, default='1')
+    subcred = models.CharField(max_length=2, choices=c.CRED, default='1')
+    sem = models.CharField(max_length=1, choices=c.SEM, default='1')
 
     def __str__(self):
         return self.subname
 
 class Internal(models.Model):
-    DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))
     student = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     subject = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
-    dept = models.CharField(max_length=5, choices=DEPT, default='MECH')
-    marks1 = models.IntegerField(default=0, null=True)
-    marks2 = models.IntegerField(default=0, null=True)
-    marks3 = models.IntegerField(default=0, null=True)
-    marks = models.IntegerField(default=100, null=True)
-    marksob = models.IntegerField(default=0, null=True)
+    dept = models.CharField(max_length=5, choices=c.DEPT, default='MECH')
+    marks1 = models.IntegerField(default=0, blank=True)
+    marks2 = models.IntegerField(default=0, blank=True)
+    marks3 = models.IntegerField(default=0, blank=True)
+    marks = models.IntegerField(default=100, blank=True)
+    marksob = models.IntegerField(default=0, blank=True)
 
     def save(self):
-        self.marksob = (int(self.marks1) + int(self.marks2) + int(self.marks3))/15
+        self.marksob = (int(self.marks1) + int(self.marks2) + int(self.marks3)) / 15
+        self.dept = self.student.department
         return super(Internal, self).save()
         
     def __str__(self):
@@ -42,29 +41,27 @@ class Grade(models.Model):
 
 
 class Semester(models.Model):  
-    RESULT = (('PASS','PASS'),('RA','Reappearance is Required'),('W','Withdrawal'),('SE','Sports Exemption'),('*Ab','Absent for Univeristy Exam'))  
-    DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))
     student = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     subject = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
     grade = models.ForeignKey(Grade, on_delete=models.DO_NOTHING, default=1)
-    dept = models.CharField(max_length=5, choices=DEPT, default='MECH')
-    result = models.CharField(max_length=30, choices=RESULT, default='PASS')
+    dept = models.CharField(max_length=5, choices=c.DEPT, default='MECH')
+    result = models.CharField(max_length=30, choices=c.RESULT, default='PASS')
     def __str__(self):
         return f'{self.student}-{self.subject.subcode}' 
 
 class IntAssign(models.Model):
-    DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))
     staff = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     subject = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
-    department = models.CharField(max_length=5, choices=DEPT, default='MECH')
+    department = models.CharField(max_length=5, choices=c.DEPT, default='MECH')
+
+
     def __str__(self):
         return f'{self.staff}-{self.subject.subcode}'
 
 class SemAssign(models.Model):
-    DEPT = (('MECH','Mechanical'), ('CIVIL','Civil'), ('EEE','Electrical and Electronics'), ('ECE','Electronics and Communication'), ('CSE','Computer Science and Engineering'),('OTHER','Others'))   
     staff = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     semester = models.ForeignKey(Subject, on_delete=models.DO_NOTHING, default=1)
-    department = models.CharField(max_length=5, choices=DEPT, default='MECH')
+    department = models.CharField(max_length=5, choices=c.DEPT, default='MECH')
     def __str__(self):
         return f'{self.staff.username}'
 

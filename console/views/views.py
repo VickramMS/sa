@@ -1,23 +1,17 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render
 from users.models import User
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponse
-from django.views.generic import View
-from django.utils import timezone 
-from console.models import Internal, Semester, IntAssign, SemAssign, Grade
-from django.forms import modelformset_factory
-from console.forms import IntAssignForm, SemAssignForm, InternalForm, SemesterForm
-from django.contrib import messages
 
 def home(request):
     if request.user.is_authenticated:
-        if request.user.is_superuser:
+        if request.user.user_type == "":
             return render(request, 'console/su-dashboard.html')
-        elif request.user.is_staff:
+        if request.user.user_type == "ADMIN":
+            return render(request, 'console/su-dashboard.html')
+        elif request.user.user_type == "HOD":
+            return render(request, 'console/dashboard.html')
+        elif request.user.user_type == "STAFF":
             return render(request, 'console/dashboard.html')
         else:
-            return render(request, 'student/dashboard.html')
+            return render(request, 'console/temp.html')
     else:
         return render(request, 'console/home.html')
