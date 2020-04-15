@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+{% load widget_tweaks %}
+<div class="row">
+    <div class="col-lg-6 mb-4" style="margin: auto">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-center">EDIT RECORD - EDIT SUBJECT RECORD</h6>
+            </div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <label for="">Subject</label>
+                    <input type="text" class="form-control" name="subname" value="{{obj.subname}}">
+                    <br>
+                    <label for="">Subject Code</label>
+                    <input type="text" class="form-control" name="subcode" value="{{obj.subcode}}">
+                    <br>
+                    <label for="">Subject Credit</label>
+                    <select type="text" class="form-control" name="subcred" >
+                        {% for i in '1234'|make_list %}
+                        {% if i == obj.subcred %}
+                        <option value="{{forloop.counter}}" selected>{{forloop.counter}}</option>
+                        {% else %}
+                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <label for="">Semester</label>
+                    <select type="text" class="form-control" name="sem" value="{{obj.sem}}">
+                        {% for i in '12345678'|make_list %}
+                        {% if i == obj.sem %}
+                        <option value="{{forloop.counter}}" selected>{{forloop.counter}}</option>
+                          {% else %}
+                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Edit Subject</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

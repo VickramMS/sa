@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from console.models import Internal, IntAssign, Subject
-from console.forms import InternalForm, IntAssignForm
+from console.forms import InternalForm
 from users.models import User
 from django.forms import modelformset_factory
 from django.contrib import messages
@@ -8,18 +8,22 @@ from django.contrib import messages
 
 def assign_internals(request):
     if request.user.user_type == "ADMIN" or request.user.user_type == "":
-        form=IntAssignForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
             sem = request.GET.get('semesters')
-            form.fields['staff'].queryset = User.objects.filter(user_type="STAFF" or "HOD", department=dept)
-            form.fields['subject'].queryset = Subject.objects.filter(sem=sem)
-        if request.method == "POST":            
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Internal job has been assigned!')
-                return redirect('assign_internals')
-        return render(request, 'console/internals/assign_internal.html',{'form':form})
+            context = {
+            "userobjs" : User.objects.filter(user_type="STAFF" or "HOD", department=dept),
+            "subjectobjs" : Subject.objects.filter(sem=sem)
+            }
+        if request.method == "POST":
+            assign = IntAssign()
+            assign.staff = User.objects.get(id=request.POST.get("staff"))
+            assign.subject = Subject.objects.get(id=request.POST.get("subject"))
+            assign.department = request.POST.get("department")
+            assign.save()
+            messages.success(request, 'Internal job has been assigned!')
+            return redirect('assign_internals')
+        return render(request, 'console/internals/assign_internal.html',context)
     else:
         return redirect('dashboard')
 
@@ -71,10 +75,8 @@ def enroll_internal(request):
             }
         if request.method == "POST":
             internals = Internal()
-            student = User.objects.get(id=request.POST.get("student"))
-            internals.student = student
-            subject = Subject.objects.get(id=request.POST.get("subject"))
-            internals.subject = subject
+            internals.student = User.objects.get(id=request.POST.get("student"))
+            internals.subject = Subject.objects.get(id=request.POST.get("subject"))
             internals.save()
             messages.success(request, 'A new internal record has been created!')
             return redirect('enroll_internal')

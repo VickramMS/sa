@@ -33,13 +33,27 @@
                 <form action="{% url 'assign_internals' %}" method="POST">
                     {% csrf_token %}
                     <label for="">Staff Name</label>
-                    {% render_field form.staff class="form-control" %}
+                    <select class="form-control" name="staff">
+                        {% for obj in userobjs %}
+                        <option value="{{obj.i}}d">{{obj}}</option>                          
+                        {% endfor %}
+                    </select>
                     <br>
                     <label for="">Subject</label>
-                    {% render_field form.subject class="form-control" %}
+                    <select class="form-control" name="semester">
+                        {% for obj in subjectobjs %}
+                          <option value="{{obj.id}}">{{obj}}</option>
+                        {% endfor %}
+                    </select>
                     <br>
-                    <label for="">Department of Students</label>
-                    {% render_field form.department class="form-control" %}
+                    <label for="">Department</label>
+                    <select type="text" class="form-control" name="department">
+                        <option value="MECH">Mechanical</option>
+                        <option value="CIVIL">Civil</option>
+                        <option value="ECE">Electronics and Communications</option>
+                        <option value="EEE">Electricals and Electronics</option>
+                        <option value="CSE">Computer Science</option>
+                    </select>
                     <br>
                     <button type="submit" class="btn btn-primary">Assign Job</button>
                 </form>

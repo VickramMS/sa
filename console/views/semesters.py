@@ -1,24 +1,28 @@
 from django.shortcuts import render, redirect
 from console.models import Semester, SemAssign, Subject
-from console.forms import SemesterForm, SemAssignForm
+from console.forms import SemesterForm
 from users.models import User
 from django.forms import modelformset_factory
 from django.contrib import messages
 
 def assign_semesters(request):
     if request.user.user_type == "ADMIN" or request.user.user_type == "":
-        form=SemAssignForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
             sem = request.GET.get('semester')
-            form.fields['staff'].queryset = User.objects.filter(user_type="STAFF" or "HOD", department=dept)
-            form.fields['semester'].queryset = Subject.objects.filter(sem=sem)
-        if request.method == "POST":            
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Semester job has been assigned!')
-                return redirect('assign_semesters')
-        return render(request, 'console/semesters/assign_semester.html',{'form':form})
+            context = {
+            "userobjs": User.objects.filter(user_type="STAFF" or "HOD", department=dept),
+            "subjectobjs": Subject.objects.filter(sem=sem)
+            }
+        if request.method == "POST":
+            assign = SemAssign()
+            assign.staff = User.objects.get(id=request.POST.get("staff"))
+            assign.semester = Subject.objects.get(id=request.POST.get("semester"))
+            assign.department = request.POST.get("department")
+            assign.save()
+            messages.success(request, 'Semester job has been assigned!')
+            return redirect('assign_semesters')
+        return render(request, 'console/semesters/assign_semester.html', context)
     else:
         return redirect('dashboard')
 
@@ -68,10 +72,8 @@ def enroll_semester(request):
             }
         if request.method == "POST":
             semester = Semester()
-            student = User.objects.get(id=request.POST.get("student"))
-            semester.student = student
-            subject = Subject.objects.get(id=request.POST.get("subject"))
-            semester.subject = subject
+            semester.student = User.objects.get(id=request.POST.get("student"))
+            semester.subject = Subject.objects.get(id=request.POST.get("subject"))
             semester.save()            
             messages.success(request, 'A new semester record has been created!')
             return redirect('enroll_semester')

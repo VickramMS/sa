@@ -7,7 +7,7 @@
 <div class="row">
     {% for grade in grades %}
     <div class="col-xl-4 col-md-6 mb-4">
-        <a style="text-decoration: none;" data-toggle="modal" data-target="#myModal">
+        <div>
             <div class="card border-left-warning shadow h-100 py-2" >
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -16,26 +16,10 @@
                             <div class="h3 mb-0 font-weight-bold text-gray-800">{{grade.letter}}</div>
                             <span class="text-xs">Credit Points - {{grade.points}}</span><br>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-trophy fa-2x text-gray-300"></i>
+                        <div class="col-auto d-block ml-auto mr-5">
+                            <a style="text-decoration: none;" class="fas fa-trash fa-3x text-gray-300" href="{% url 'del_grade' pk=grade.id %}"></a>
                         </div>                            
                     </div>
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" style="color: rgb(0, 68, 255);">Delete - {{grade.letter}}</h4>
-                </div>
-                <div class="modal-body">
-                    <p style="color: red;">Are you sure you want to delete this GRADE - {{grade.letter}}</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="{% url 'del_grade' pk=grade.id %}"><div class="btn btn-outline-danger">Delete</div></a>
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
