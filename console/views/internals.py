@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from console.models import Internal, IntAssign, Subject
-from console.forms import InternalForm
 from users.models import User
 from django.forms import modelformset_factory
 from django.contrib import messages
@@ -65,7 +64,6 @@ def internals(request):
 
 def enroll_internal(request):
     if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
-        form=InternalForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
             sub = request.GET.get('semester')

@@ -62,7 +62,6 @@ def semesters(request):
 
 def enroll_semester(request):
     if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
-        form=SemesterForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
             sub = request.GET.get('semester')
