@@ -1,39 +1,151 @@
-{% load static %}
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <title>Student Analytica</title>
+    <title>Login | Student Analytica</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        .login-container {
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .login-logo {
+            position: relative;
+            margin-left: -41.5%;
+        }
+
+        .login-logo img {
+            position: absolute;
+            width: 20%;
+            margin-top: 19%;
+            background: #282726;
+            border-radius: 4.5rem;
+            padding: 5%;
+        }
+
+        .login-form-1 {
+            padding: 9%;
+            background: #282726;
+            box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .login-form-1 h3 {
+            text-align: center;
+            margin-bottom: 12%;
+            color: #fff;
+        }
+
+        .login-form-2 {
+            padding: 9%;
+            background: #7e37f0;
+            box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .login-form-2 h3 {
+            text-align: center;
+            margin-bottom: 12%;
+            color: #fff;
+        }
+
+        .btnSubmit {
+            font-weight: 600;
+            width: 50%;
+            color: #282726;
+            background-color: #fff;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+        }
+
+        .btnForgetPwd {
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .btnForgetPwd:hover {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        input {
+            outline: none;
+            background-color: #00000000;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-bottom: 1px solid white;
+            color: white
+        }
+
+        input::placeholder {
+            color: white;
+            font-size: 14px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body class="body">
-    <div class="login-card">
-        <div class="c1">
-            <i class="fa fa-user" style="font-size: 150"></i>
-            <br>
-            <hr class="divider">
-            <label class="label">Login</label>
-        </div>      
-        <div class="c2">
-            <h3 class="text">Student Analytica</h3>
-            <br>
-            <br>
-            <form action="{% url 'login' %}" method="post">
-                {% csrf_token %}
-                <input class="form-control form-in" type="email" name="email" placeholder="E-mail">
-                <br>
-                <input class="form-control form-in" type="password" name="password" placeholder="Password">
-                <br>
-                <button class="btn btn-primary">Submit</button>
-                <div class="text">
-                    <br>
-                    <a>Kindly contact your Faculty Advisor or Head of the Department or System Admin if you have any issues with the login</a>
-                </div>
-            </form>
+
+<body>
+    <div class="container login-container py-0 my-5" style="color: white">
+        <div class="row">
+            <div class="col-md-6 login-form-1 mb-0">
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <h3>Student Login</h3>
+                    <hr style="background-color: white;">
+                    <label for="">Anna University Register No.</label>
+                    <div class="form-group">
+                        <input type="email" name="email" autocomplete="off" placeholder="12 digit no.">
+                    </div>
+                    <label for="">Date of Birth</label>
+                    <div class="form-group">
+                        <input type="text" name="password" autocomplete="off" placeholder="DD-MM-YYYY">
+                    </div>
+                    <div class="form-group mb-4">
+                        <button type="submit" class="btnSubmit d-block mr-0 ml-auto mt-4">Login</button>
+                    </div>
+                    <hr style="background-color: white;">
+                    <div class="form-group">
+                        <p style="text-align: center;">If you have any issues in logging in, Please contact your
+                            students' representative or faculty advisor.</p>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 login-form-2 mb-0">
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <h3>Staff Login</h3>
+                    <hr style="background-color: white;">
+                    <label for="">E-mail</label>
+                    <div class="form-group">
+                        <input type="email" name="email" autocomplete="off" placeholder="Your Email *">
+                    </div>
+                    <label for="">Password</label>
+                    <div class="form-group">
+                        <input type="password" name="password" autocomplete="off" placeholder="Your Password *">
+                    </div>
+                    <div class="form-group mb-4">
+                        <button type="submit" class="btnSubmit d-block mr-0 ml-auto mt-4">Login</button>
+                    </div>
+                    <hr style="background-color: white;">
+                    <div class="form-group">
+                        <p style="text-align: center; padding: 0;">If you have any issues in logging in, Please contact
+                            your head of
+                            the department or the system admin.</p>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>    
+    </div>
 </body>
+
 </html>

@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 {% load widget_tweaks %}
-
 <style>
     .hidden {
-        display: none
+        display: none;
     }
 </style>
 
@@ -12,10 +11,10 @@
     <div class="col-lg-6 mb-4" style="margin: auto">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary text-center">ENROLL - INTERNAL MARKS</h6>
+                <h6 class="m-0 font-weight-bold text-primary text-center">ENROLL - SEMESTER MARKS</h6>
             </div>
             <div class="card-body">
-                <form action="{% url 'enroll_internal' %}" method="GET">
+                <form action="{% url 'enroll_semester' %}" method="GET">
                     <label for="">Department</label>
                     <select type="text" class="form-control" name="department">
                         <option value="MECH">Mechanical</option>
@@ -35,11 +34,11 @@
                     <button type="submit" class="btn btn-primary">Filter</button>
                 </form>
                 <hr>
-                <form action="{% url 'enroll_internal' %}" method="POST">
+                <form action="{% url 'enroll_semester' %}" method="POST">
                     {% csrf_token %}
                     <label for="">Student Name</label>
                     <select name="student" class="form-control" id="">
-                        {% for obj in studentobjs %}
+                        {% for obj in userobjs %}
                         <option value="{{obj.id}}">{{obj}}</option>
                         {% endfor %}
                     </select>

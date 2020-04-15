@@ -23,16 +23,16 @@ def assign_semesters(request):
         return redirect('dashboard')
 
 def assigned_semesters(request):
-    if request.user.is_staff:  
+    if request.user.user_type == "ADMIN" or request.user.user_type == "" or request.user.user_type == "STAFF" or request.user.user_type == "HOD":  
         context={
             'classes': SemAssign.objects.filter(staff__username=request.user.username)
         }
-        return render(request, 'console/semesters/assigned_sem.html', context)
-    else:
+        return render(request, 'console/semesters/assigned_semester.html', context)
+    elif request.user.user_type == "STUDENT" or request.user.user_type == "REPRESENTATIVE":
         return redirect('semesters')
 
 def semesters(request):
-    if request.user.is_staff: 
+    if  request.user.user_type == "ADMIN" or request.user.user_type == "" or request.user.user_type == "STAFF" or request.user.user_type == "HOD": 
         formset = modelformset_factory(Semester, fields=('student','subject','grade','result'), extra=0)
         if request.method == "GET":
             search = request.GET.get('subject-query')
@@ -43,7 +43,7 @@ def semesters(request):
                 return redirect('assigned_sem')
         forms = formset(queryset=(Semester.objects.filter(subject__subcode=search)))
         return render(request, 'console/semesters/semesters.html', {'forms':forms})
-    else:
+    elif request.user.user_type == "STUDENT" or request.user.user_type == "REPRESENTATIVE":
         context={
             'semesters1': Semester.objects.filter(student__username=request.user.username).filter(subject__sem=1),
             'semesters2': Semester.objects.filter(student__username=request.user.username).filter(subject__sem=2),
@@ -54,30 +54,37 @@ def semesters(request):
             'semesters7': Semester.objects.filter(student__username=request.user.username).filter(subject__sem=7),
             'semesters8': Semester.objects.filter(student__username=request.user.username).filter(subject__sem=8),
         }
-        return render(request, 'student/semesters/semesters.html',context)
+        return render(request, 'student/academics/semesters.html',context)
 
 def enroll_semester(request):
-    if request.user.is_staff:
+    if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
         form=SemesterForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
             sub = request.GET.get('semester')
-            form.fields['student'].queryset = User.objects.filter(is_staff=False, is_superuser=False, profile__Department=dept)
-            form.fields['subject'].queryset = Subject.objects.filter(sem=sub)
-        if request.method == "POST":            
-            if form.is_valid():
-                Semester=form.save()
-                return redirect('enroll_semester')
-            else:
-                print('form not valid')
-        return render(request, 'console/semesters/new_sem.html',{'form':form})
-    else:
+            context = {
+            "userobjs" : User.objects.filter(user_type="STUDENT" or "REPRESENTATIVE", department=dept),
+            "subjectobjs": Subject.objects.filter(sem=sub)
+            }
+        if request.method == "POST":
+            semester = Semester()
+            student = User.objects.get(id=request.POST.get("student"))
+            semester.student = student
+            subject = Subject.objects.get(id=request.POST.get("subject"))
+            semester.subject = subject
+            semester.save()            
+            messages.success(request, 'A new semester record has been created!')
+            return redirect('enroll_semester')
+        return render(request, 'console/semesters/enroll_semester.html', context)
+    elif request.user.user_type == "STUDENT" or request.user.user_type == "REPRESENTATIVE":
         return redirect('dashboard')
+    else:
+        return redirect("page404")
 
 
 def finish_semesters(request):
     if request.user.is_authenticated:
-        if request.user.is_staff:
+        if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
             context={
             'semesters': SemAssign.objects.filter(staff__username=request.user.username)
             }
@@ -85,7 +92,7 @@ def finish_semesters(request):
 
 def delete_semester(request, id, id2):
     if request.user.is_authenticated:
-        if request.user.is_staff:
+        if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
             context={
             'objs': Semester.objects.filter(subject__subcode=id, dept=id2),
             'id':id,
@@ -95,7 +102,7 @@ def delete_semester(request, id, id2):
 
 def delete_semesters(request, id, id2):
     if request.user.is_authenticated:
-        if request.user.is_staff:
+        if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
             obj = SemAssign.objects.filter(semester__subcode=id, department=id2)
             obj.delete()
             return redirect('finish_sem')

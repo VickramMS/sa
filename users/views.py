@@ -6,6 +6,8 @@ from users.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, logout
 
+
+
 class Login(View):
     template_name="console/home.html"
     def get(self,request):

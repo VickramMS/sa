@@ -23,8 +23,8 @@ def assign_internals(request):
     else:
         return redirect('dashboard')
 
-def assigned_int(request):
-    if request.user.user_type == "STAFF" or request.user.user_type == "HOD":  
+def assigned_internals(request):
+    if request.user.user_type == "ADMIN" or request.user.user_type == "" or request.user.user_type == "STAFF" or request.user.user_type == "HOD":
         context={
             'classes': IntAssign.objects.filter(staff__username=request.user.username)
         } 
@@ -33,7 +33,7 @@ def assigned_int(request):
         return redirect('internals')
 
 def internals(request):
-    if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
+    if  request.user.user_type == "ADMIN" or request.user.user_type == "" or request.user.user_type == "STAFF" or request.user.user_type == "HOD":
         formset = modelformset_factory(Internal, fields=('student','marks1','marks2','marks3'), extra=0)
         if request.method == "GET":
             search = request.GET.get('subject-query')
@@ -65,23 +65,27 @@ def enroll_internal(request):
         if request.method == "GET":
             dept = request.GET.get('department')
             sub = request.GET.get('semester')
-            form.fields['student'].queryset = User.objects.filter(user_type="STUDENT" or "REPRESENTATIVE", department=dept)
-            form.fields['subject'].queryset = Subject.objects.filter(sem=sub)
-        if request.method == "POST":            
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'A new internal record has been created!')
-                return redirect('enroll_internal')
-            else:
-                print('form not valid')
-        return render(request, 'console/internals/enroll_internal.html',{'form':form})
+            context = {
+            "studentobjs" : User.objects.filter(user_type="STUDENT" or "REPRESENTATIVE", department=dept),
+            "subjectobjs": Subject.objects.filter(sem=sub)
+            }
+        if request.method == "POST":
+            internals = Internal()
+            student = User.objects.get(id=request.POST.get("student"))
+            internals.student = student
+            subject = Subject.objects.get(id=request.POST.get("subject"))
+            internals.subject = subject
+            internals.save()
+            messages.success(request, 'A new internal record has been created!')
+            return redirect('enroll_internal')
+        return render(request, 'console/internals/enroll_internal.html', context)
     elif request.user.user_type == "STUDENT" or request.user.user_type == "REPRESENTATIVE":
         return redirect('dashboard')
     else:
         return redirect("page404")
 
 
-def finish_int(request):
+def finish_internals(request):
     if request.user.is_authenticated:
         if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
             context={
@@ -89,7 +93,7 @@ def finish_int(request):
             }
             return render(request, 'console/internals/finish_int.html', context)
 
-def delete_int(request, id, id2):
+def delete_internal(request, id, id2):
     if request.user.is_authenticated:
         if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
             context={
@@ -99,7 +103,7 @@ def delete_int(request, id, id2):
             }
             return render(request, 'console/internals/finish_int_del.html', context)
 
-def delete_internal(request, id, id2):
+def delete_internals(request, id, id2):
     if request.user.is_authenticated:
         if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
             obj = IntAssign.objects.filter(subject__subcode=id, department=id2)
