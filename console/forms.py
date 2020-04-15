@@ -18,11 +18,6 @@ class SubjectForm(forms.ModelForm):
         model = Subject
         fields = '__all__'
             
-class GradeForm(forms.ModelForm):
-    class Meta:
-        model = Grade
-        fields = '__all__'
-
 class InternalForm(forms.ModelForm):
     class Meta:
         model = Internal

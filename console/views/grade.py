@@ -1,17 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from console.models import Grade
-from console.forms import GradeForm
 from django.contrib import messages
 
 
 def add(request):
     if request.user.is_staff:
-        form=GradeForm(request.POST)
-        if form.is_valid():
-            Grade=form.save()
+        if request.method == "POST":
+            grade = Grade()
+            grade.points = request.POST.get("points")
+            grade.letter = request.POST.get("letter")
+            grade.save()
             messages.success(request, 'New Grade has been added!')
             return redirect('add_grade')
-        return render(request, 'console/grades/add.html',{'form':form})
+        return render(request, 'console/grades/add.html')
     else:
         return redirect('dashboard')
 
@@ -28,13 +29,15 @@ def elist(request):
     
 def edit(request, pk):
     if request.user.is_staff:
-        obj = get_object_or_404(Grade, id=pk)
-        form = GradeForm(request.POST or None, instance=obj)
-        context = {'form':form}
-        if form.is_valid():
-            obj = form.save(commit=False)
+        obj = Grade.objects.get(id=pk)
+        if request.method == "GET":
+            context = {
+                "obj": obj
+            }
+        if request.method == "POST":
+            obj.points = request.POST.get("points")
+            obj.letter = request.POST.get("letter")
             obj.save()
-            context = {'form':form}
             messages.warning(request, 'Grade records has been updated!')
             return redirect('edit_grades')
         return render(request, 'console/grades/edit.html', context)
@@ -54,7 +57,7 @@ def dlist(request):
 def delete(request, pk):
     if request.user.is_authenticated:
         if request.user.is_staff:
-            obj = Grade.objects.filter(id=pk)
+            obj = Grade.objects.get(id=pk)
             obj.delete()
             messages.error(request, 'Grade record has been deleted!')
             return redirect('delete_grade')

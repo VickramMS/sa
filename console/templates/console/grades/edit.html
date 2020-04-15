@@ -11,10 +11,10 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     <label for="">Grade Points</label>
-                    {% render_field form.points|add_class:"form-control" %}
+                    <input type="text" class="form-control" name="points" value="{{obj.points}}">
                     <br>
                     <label for="">Letter Grade</label>
-                    {% render_field form.letter|add_class:"form-control" %}
+                    <input type="text" class="form-control" name="letter" value="{{obj.letter}}">
                     <br>
                     <button type="submit" class="btn btn-primary">Edit Grade</button>
                 </form>
