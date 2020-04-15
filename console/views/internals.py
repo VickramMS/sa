@@ -38,9 +38,8 @@ def assigned_internals(request):
 def internals(request):
     if  request.user.user_type == "ADMIN" or request.user.user_type == "" or request.user.user_type == "STAFF" or request.user.user_type == "HOD":
         formset = modelformset_factory(Internal, fields=('student','marks1','marks2','marks3'), extra=0)
-        if request.method == "GET":
-            search = request.GET.get('subject-query')
-            department = request.GET.get('department')
+        search = request.GET.get('subject-query')
+        department = request.GET.get('department')
         if request.method == "POST":
             forms=formset(request.POST)
             if forms.is_valid():

@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-{% load crispy_forms_tags %}
 {% load widget_tweaks %}
 
 <style>
 .noborder{
     border: none;
-    background-color: #f8f9fc;
     padding-top: 5px;
+    background-color: rgba(0, 0, 0, 0);
+    outline: none;
+    pointer-events: none;
 }
+
 </style>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -23,7 +25,6 @@
 
 <form method="POST" action="{% url 'internals' %}"  class="form-group">
     {% csrf_token %}
-    {{ forms.management_form }}
     <table class="table" style="margin-top: 2%">
         <thead class="thead" style="background-color: rgb(21, 95, 255); color: white; text-align: center;">
             <tr>
@@ -35,12 +36,15 @@
             </tr>
         </thead>
         <tbody style="text-align: center; color: black"> 
+            {{ forms.management_form }}
             {% for form in forms %}
             <tr>
             <th scope="row" style="padding-top: 17px">{{forloop.counter}}</th>
             {% for field in form %}
             {% if forloop.counter == 1 %}
-            <td>{{field|add_class:"noborder"}}</td>
+            <td>{{field|add_class:"noborder"}}
+            </td>
+
             {% else %}
             <td>{{field|add_class:"form-control"}}</td>
             {% endif %}

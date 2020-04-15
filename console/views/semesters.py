@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from console.models import Semester, SemAssign, Subject
-from console.forms import SemesterForm
 from users.models import User
 from django.forms import modelformset_factory
 from django.contrib import messages
