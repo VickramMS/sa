@@ -9,7 +9,7 @@
                 <h6 class="m-0 font-weight-bold text-primary text-center">JOB ASSIGN - INTERNAL MARKS</h6>
             </div>
             <div class="card-body">
-                <form action="{% url 'assign_int' %}" method="GET">
+                <form action="{% url 'assign_internals' %}" method="GET">
                     <label for="">Department of Staff</label>
                     <select type="text" class="form-control" name="department">
                         <option value="MECH">Mechanical</option>
@@ -21,7 +21,7 @@
                     </select>
                     <br>
                     <label for="">Semester</label>
-                    <select type="text" class="form-control" name="subject">
+                    <select type="text" class="form-control" name="semesters">
                         {% for i in '12345678'|make_list %}
                         <option value="{{forloop.counter}}">{{forloop.counter}}</option>
                         {% endfor %}
@@ -30,7 +30,7 @@
                     <button type="submit" class="btn btn-primary">Filter</button>
                 </form>
                 <hr>
-                <form action="{% url 'assign_int' %}" method="POST">
+                <form action="{% url 'assign_internals' %}" method="POST">
                     {% csrf_token %}
                     <label for="">Staff Name</label>
                     {% render_field form.staff class="form-control" %}

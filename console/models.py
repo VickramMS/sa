@@ -34,7 +34,7 @@ class Internal(models.Model):
 
 class Grade(models.Model):
     points = models.IntegerField()
-    letter = models.CharField(max_length=1, unique=True)
+    letter = models.CharField(max_length=2, unique=True)
 
     def __str__(self):
         return self.letter

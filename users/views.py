@@ -62,7 +62,7 @@ def add_staff(request):
         user.password = request.POST.get('password')
         user.set_password(str(user.password))
         user.save()
-        messages.success(request, 'A new student has been created!')
+        messages.success(request, 'A new staff has been created!')
         return redirect('add_staff')
     return render(request, 'console/users/add_staff.html')
 

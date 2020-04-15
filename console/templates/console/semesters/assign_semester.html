@@ -1,21 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 {% load widget_tweaks %}
-
-<style>
-.hidden{
-    display: none
-}
-</style>
-
 <div class="row">
     <div class="col-lg-6 mb-4" style="margin: auto">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary text-center">ENROLL - INTERNAL MARKS</h6>
+                <h6 class="m-0 font-weight-bold text-primary text-center">JOB ASSIGN - SEMESTER MARKS</h6>
             </div>
             <div class="card-body">
-                <form action="{% url 'enroll_internal' %}" method="GET">
+                <form action="{% url 'assign_semesters' %}" method="GET">
                     <label for="">Department</label>
                     <select type="text" class="form-control" name="department">
                         <option value="MECH">Mechanical</option>
@@ -23,23 +16,31 @@
                         <option value="ECE">Electronics and Communications</option>
                         <option value="EEE">Electricals and Electronics</option>
                         <option value="CSE">Computer Science</option>
+                        <option values="OTHERS">Others</option>
                     </select>
                     <br>
                     <label for="">Semester</label>
-                    <input type="text" class="form-control" name="semester">
+                    <select type="text" class="form-control" name="semester">
+                        {% for i in '12345678'|make_list %}
+                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                        {% endfor %}
+                    </select>
                     <br>
                     <button type="submit" class="btn btn-primary">Filter</button>
                 </form>
                 <hr>
-                <form action="{% url 'enroll_internal' %}" method="POST">
+                <form action="{% url 'assign_semesters' %}" method="POST">
                     {% csrf_token %}
-                    <label for="">Student</label>
-                    {% render_field form.student class="form-control"%} <br>
+                    <label for="">Staff Name</label>
+                    {% render_field form.staff|add_class:"form-control" %}
+                    <br>
                     <label for="">Subject</label>
-                    {% render_field form.subject class="form-control" %} <br>
+                    {% render_field form.semester|add_class:"form-control" %}
+                    <br>
                     <label for="">Department</label>
-                    {% render_field form.dept class="hidden" %} <br>
-                    <button type="submit" class="btn btn-primary" >Enroll</button>
+                    {% render_field form.department|add_class:"form-control" %}
+                    <br>
+                    <button type="submit" class="btn btn-primary">Assign Job</button>
                 </form>
             </div>
         </div>

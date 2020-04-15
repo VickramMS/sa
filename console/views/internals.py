@@ -6,20 +6,20 @@ from django.forms import modelformset_factory
 from django.contrib import messages
 
 
-def assign_int(request):
-    if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
+def assign_internals(request):
+    if request.user.user_type == "ADMIN" or request.user.user_type == "":
         form=IntAssignForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
-            sem = request.GET.get('subject')
+            sem = request.GET.get('semesters')
             form.fields['staff'].queryset = User.objects.filter(user_type="STAFF" or "HOD", department=dept)
             form.fields['subject'].queryset = Subject.objects.filter(sem=sem)
         if request.method == "POST":            
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Internal job has been assigned!')
-                return redirect('assign_int')
-        return render(request, 'console/internals/assign_int.html',{'form':form})
+                return redirect('assign_internals')
+        return render(request, 'console/internals/assign_internal.html',{'form':form})
     else:
         return redirect('dashboard')
 
@@ -28,7 +28,7 @@ def assigned_int(request):
         context={
             'classes': IntAssign.objects.filter(staff__username=request.user.username)
         } 
-        return render(request, 'console/internals/assigned_class.html', context)
+        return render(request, 'console/internals/assigned_internal.html', context)
     elif request.user.user_type == "STUDENT" or request.user.user_type == "REPRESENTATIVE":
         return redirect('internals')
 
@@ -60,7 +60,7 @@ def internals(request):
         return render(request, 'student/academics/internals.html',context)
 
 def enroll_internal(request):
-    if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
+    if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
         form=InternalForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
@@ -74,14 +74,16 @@ def enroll_internal(request):
                 return redirect('enroll_internal')
             else:
                 print('form not valid')
-        return render(request, 'console/internals/new_int.html',{'form':form})
+        return render(request, 'console/internals/enroll_internal.html',{'form':form})
     elif request.user.user_type == "STUDENT" or request.user.user_type == "REPRESENTATIVE":
         return redirect('dashboard')
+    else:
+        return redirect("page404")
 
 
 def finish_int(request):
     if request.user.is_authenticated:
-        if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
+        if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
             context={
             'classes': IntAssign.objects.filter(staff__username=request.user.username)
             }
@@ -89,7 +91,7 @@ def finish_int(request):
 
 def delete_int(request, id, id2):
     if request.user.is_authenticated:
-        if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
+        if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
             context={
             'objs': Internal.objects.filter(subject__subcode=id, dept=id2),
             'id':id,
@@ -99,7 +101,7 @@ def delete_int(request, id, id2):
 
 def delete_internal(request, id, id2):
     if request.user.is_authenticated:
-        if request.user.user_type == "STAFF" or request.user.user_type == "HOD":
+        if request.user.user_type == "STAFF" or request.user.user_type == "HOD" or request.user.user_type == "ADMIN" or request.user.user_type == "":
             obj = IntAssign.objects.filter(subject__subcode=id, department=id2)
             obj.delete()
             return redirect('finish_int')

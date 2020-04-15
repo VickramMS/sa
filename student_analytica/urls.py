@@ -29,5 +29,6 @@ urlpatterns = [
     path('semester/', include('console.urls.semesters')),
     path('user/', include('users.urls')),
     path('login/', user_views.Login.as_view(),name='login'),
-    path('logout/', user_views.LogoutView.as_view(),name='logout'),
+    path('logout/', user_views.LogoutView.as_view(), name='logout'),
+    path('error404/', console_views.page404, name="page404")
 ]

@@ -5,23 +5,24 @@ from users.models import User
 from django.forms import modelformset_factory
 from django.contrib import messages
 
-def assign_sem(request):
-    if request.user.is_staff:
+def assign_semesters(request):
+    if request.user.user_type == "ADMIN" or request.user.user_type == "":
         form=SemAssignForm(request.POST)
         if request.method == "GET":
             dept = request.GET.get('department')
-            sem = request.GET.get('subject')
-            form.fields['staff'].queryset = User.objects.filter(is_staff=True, profile__Department=dept)
+            sem = request.GET.get('semester')
+            form.fields['staff'].queryset = User.objects.filter(user_type="STAFF" or "HOD", department=dept)
             form.fields['semester'].queryset = Subject.objects.filter(sem=sem)
         if request.method == "POST":            
             if form.is_valid():
                 form.save()
-                return redirect('assign_sem')
-        return render(request, 'console/semesters/assign_sem.html',{'form':form})
+                messages.success(request, 'Semester job has been assigned!')
+                return redirect('assign_semesters')
+        return render(request, 'console/semesters/assign_semester.html',{'form':form})
     else:
         return redirect('dashboard')
 
-def assigned_sem(request):
+def assigned_semesters(request):
     if request.user.is_staff:  
         context={
             'classes': SemAssign.objects.filter(staff__username=request.user.username)
@@ -74,7 +75,7 @@ def enroll_semester(request):
         return redirect('dashboard')
 
 
-def finish_sem(request):
+def finish_semesters(request):
     if request.user.is_authenticated:
         if request.user.is_staff:
             context={
@@ -82,7 +83,7 @@ def finish_sem(request):
             }
             return render(request, 'console/semesters/finish_sem.html', context)
 
-def delete_sem(request, id, id2):
+def delete_semester(request, id, id2):
     if request.user.is_authenticated:
         if request.user.is_staff:
             context={
@@ -92,7 +93,7 @@ def delete_sem(request, id, id2):
             }
             return render(request, 'console/semesters/finish_sem_del.html', context)
 
-def delete_semester(request, id, id2):
+def delete_semesters(request, id, id2):
     if request.user.is_authenticated:
         if request.user.is_staff:
             obj = SemAssign.objects.filter(semester__subcode=id, department=id2)
